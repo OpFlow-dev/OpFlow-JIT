@@ -1,0 +1,33 @@
+name : AutoFormat
+
+on: [push, pull_request]
+jobs:
+  autoformat_job:
+    runs-on: ubuntu-latest
+    name: Automatic formatting
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '5'
+    - name: Update copyright
+      id: copyright
+      working-directory: ./
+      run: |
+        bash scripts/update_copyright.sh
+        if ! git diff --no-ext-diff --quiet --exit-code; then
+          echo ::set-output name=status::"changed"
+        else
+          echo ::set-output name=status::"unchanged"
+        fi
+    - name: Autoformat
+      id: format
+      uses: Luohaothu/auto-format@master
+    - name: Autocommit
+      if: steps.format.outputs.status == 'changed' || steps.copyright.outputs.status == 'changed'
+      run: |
+        git config --global user.name 'OpFlow-Guardian'
+        git config --global user.email 'guardian@opflow.git'
+        git commit -am "[CI] Code auto formatted"
+        git push
