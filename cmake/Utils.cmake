@@ -13,12 +13,7 @@
 # Utilities for building
 #
 # ----------------------------------------------------------------------------
-#
-# Modified from utils.cmake in spdlog (https://github.com/gabime/spdlog)
-#
-# ----------------------------------------------------------------------------
 
-# Get spdlog version from include/spdlog/version.h and put it in SPDLOG_VERSION
 function(opflow_extract_version)
     execute_process(
             COMMAND git -C ${CMAKE_CURRENT_SOURCE_DIR} rev-parse
@@ -32,26 +27,31 @@ function(opflow_extract_version)
                 RESULT_VARIABLE _result
                 OUTPUT_VARIABLE _output
         )
-        string(REGEX MATCH "v([0-9]+)\.([0-9]+)\.([0-9]+)" _ ${_output})
-        set(OPFLOW_VERSION_STRING ${_output} PARENT_SCOPE)
-        execute_process(
-                COMMAND git describe --tags
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                RESULT_VARIABLE _result
-                OUTPUT_VARIABLE _output
-        )
-        set(OPFLOW_COMMIT_STRING ${_output} PARENT_SCOPE)
-        if (NOT CMAKE_MATCH_COUNT EQUAL 3)
-            message(FATAL_ERROR "Could not extract version number from ${OPFLOW_VERSION_STRING}")
-        endif ()
-        set(ver_major ${CMAKE_MATCH_1})
-        set(ver_minor ${CMAKE_MATCH_2})
-        set(ver_patch ${CMAKE_MATCH_3})
+        if (_result EQUAL "0")
+            string(REGEX MATCH "v([0-9]+)\.([0-9]+)\.([0-9]+)" _ ${_output})
+            set(OPFLOW_VERSION_STRING ${_output} PARENT_SCOPE)
+            execute_process(
+                    COMMAND git describe --tags
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                    RESULT_VARIABLE _result
+                    OUTPUT_VARIABLE _output
+            )
+            set(OPFLOW_COMMIT_STRING ${_output} PARENT_SCOPE)
+            if (NOT CMAKE_MATCH_COUNT EQUAL 3)
+                message(FATAL_ERROR "Could not extract version number from ${OPFLOW_VERSION_STRING}")
+            endif ()
+            set(ver_major ${CMAKE_MATCH_1})
+            set(ver_minor ${CMAKE_MATCH_2})
+            set(ver_patch ${CMAKE_MATCH_3})
 
-        set(OPFLOW_VERSION_MAJOR ${ver_major} CACHE STRING "OPFLOW_VERSION_MAJOR" FORCE)
-        set(OPFLOW_VERSION_MINOR ${ver_minor} CACHE STRING "OPFLOW_VERSION_MINOR" FORCE)
-        set(OPFLOW_VERSION_PATCH ${ver_patch} CACHE STRING "OPFLOW_VERSION_PATCH" FORCE)
-        set(OPFLOW_VERSION "${ver_major}.${ver_minor}.${ver_patch}" CACHE STRING "OPFLOW_VERSION" FORCE)
+            set(OPFLOW_VERSION_MAJOR ${ver_major} CACHE STRING "OPFLOW_VERSION_MAJOR" FORCE)
+            set(OPFLOW_VERSION_MINOR ${ver_minor} CACHE STRING "OPFLOW_VERSION_MINOR" FORCE)
+            set(OPFLOW_VERSION_PATCH ${ver_patch} CACHE STRING "OPFLOW_VERSION_PATCH" FORCE)
+            set(OPFLOW_VERSION "${ver_major}.${ver_minor}.${ver_patch}" CACHE STRING "OPFLOW_VERSION" FORCE)
+        else ()
+            message(STATUS "Git version tags not found. Use default version file instead.")
+            opflow_extract_version_from_file()
+        endif ()
     else ()
         message(STATUS "Code not organized by git. Use default version file instead")
         opflow_extract_version_from_file()
