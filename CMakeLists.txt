@@ -133,7 +133,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target
 # ----------------------------------------------------------------------------
-add_library(OpFlow-JIT STATIC src/OpFlow.cpp)
+add_library(OpFlow-JIT STATIC src/Expression.cpp src/Expression.hpp)
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC

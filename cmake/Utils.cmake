@@ -59,7 +59,7 @@ function(opflow_extract_version)
 endfunction()
 
 function(opflow_extract_version_from_file)
-    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/include/Version.hpp" file_contents)
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/src/Version.hpp" file_contents)
     string(REGEX MATCH "OPFLOW_VERSION_MAJOR ([0-9]+)" _ "${file_contents}")
     if (NOT ${CMAKE_MATCH_COUNT} EQUAL 1)
         message(FATAL_ERROR "Could not extract major version number from include/Version")
