@@ -37,14 +37,6 @@
 #define OPFLOW_CPP20
 #endif
 
-// Field Macros
-#include "Core/Field/FieldMacros.hpp"
-
-#define OP_ERRMSG_DIM_MISMATCH "Specified dims count & Tensor dims count mismatch."
-#define OP_ERRMSG_HIOD_SCHEME_ON_BD                                                                          \
-    "High order schemes on boundary is not supported in OpFlow."                                             \
-    " Please consider use composed operators with low order decades."
-
 #include <cstring>
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
@@ -216,7 +208,6 @@ namespace OpFlow {
         MPI_Comm_rank(MPI_COMM_WORLD, &_rank);                                                               \
         if (_rank == 0) OP_TRACE(__VA_ARGS__);                                                               \
     } while (0)
-
 #else
 #define OP_MPI_SEQ_INFO(...) OP_INFO(__VA_ARGS__)
 #define OP_MPI_SEQ_DEBUG(...) OP_DEBUG(__VA_ARGS__)
@@ -227,23 +218,6 @@ namespace OpFlow {
 #define OP_MPI_MASTER_TRACE(...) OP_TRACE(__VA_ARGS__)
 #define OP_MPI_MASTER_WARN(...) OP_WARN(__VA_ARGS__)
 #endif
-
-#define DEFINE_CRTP_HELPERS(X)                                                                               \
-    const X& derived() const { return *static_cast<const X*>(this); }                                        \
-    X& derived() { return *static_cast<X*>(this); }
-
-#define DEFINE_TRAITS_CVR(X)                                                                                 \
-    template <X##Type T>                                                                                     \
-    struct X##Trait<const T> : X##Trait<T> {};                                                               \
-    template <X##Type T>                                                                                     \
-    struct X##Trait<T&> : X##Trait<T> {};                                                                    \
-    template <X##Type T>                                                                                     \
-    struct X##Trait<const T&> : X##Trait<T> {};
-
-#define DEFINE_TRAITS(X)                                                                                     \
-    template <X##Type T>                                                                                     \
-    struct X##Trait;                                                                                         \
-    DEFINE_TRAITS_CVR(X)
 
 #include <utility>
 #define OP_PERFECT_FOWD(X) std::forward<decltype(X)>(X)
