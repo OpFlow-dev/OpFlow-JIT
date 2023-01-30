@@ -16,8 +16,8 @@
 
 namespace OpFlow {
     Scalar &Scalar::operator=(const Expr &other) {
-        if (this != &other)  {
-            auto& prog = Program::get_current_program();
+        if (this != &other) {
+            auto &prog = Program::get_current_program();
             if (auto ker = prog.get_current_kernel()) {
                 // standalone kernel
 
@@ -29,4 +29,5 @@ namespace OpFlow {
         }
         return *this;
     }
-}
+
+}// namespace OpFlow
