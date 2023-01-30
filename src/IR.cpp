@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// Copyright (c) 2019 - 2022 by the OpFlow developers
+// Copyright (c) 2019 - 2023 by the OpFlow developers
 //
 // This file is part of OpFlow.
 //
@@ -10,14 +10,4 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_EXPRESSION_HPP
-#define OPFLOW_JIT_EXPRESSION_HPP
-
-namespace OpFlow {
-    class Expr {
-    public:
-        virtual ~Expr() = default;
-    };
-}
-
-#endif//OPFLOW_JIT_EXPRESSION_HPP
+#include "IR.hpp"

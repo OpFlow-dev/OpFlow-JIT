@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// Copyright (c) 2019 - 2022 by the OpFlow developers
+// Copyright (c) 2019 - 2023 by the OpFlow developers
 //
 // This file is part of OpFlow.
 //
@@ -10,14 +10,18 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_EXPRESSION_HPP
-#define OPFLOW_JIT_EXPRESSION_HPP
+#ifndef OPFLOW_JIT_KERNEL_HPP
+#define OPFLOW_JIT_KERNEL_HPP
+
+#include <vector>
+#include <memory>
+#include "IR.hpp"
 
 namespace OpFlow {
-    class Expr {
+    class Kernel {
     public:
-        virtual ~Expr() = default;
+        std::vector<std::unique_ptr<Stmt>> statements;
     };
 }
 
-#endif//OPFLOW_JIT_EXPRESSION_HPP
+#endif//OPFLOW_JIT_KERNEL_HPP

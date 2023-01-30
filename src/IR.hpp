@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// Copyright (c) 2019 - 2022 by the OpFlow developers
+// Copyright (c) 2019 - 2023 by the OpFlow developers
 //
 // This file is part of OpFlow.
 //
@@ -10,14 +10,23 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_EXPRESSION_HPP
-#define OPFLOW_JIT_EXPRESSION_HPP
+#ifndef OPFLOW_JIT_IR_HPP
+#define OPFLOW_JIT_IR_HPP
 
 namespace OpFlow {
-    class Expr {
+    class IRVisitor;
+
+    class IRNode {
     public:
-        virtual ~Expr() = default;
+        IRNode() = default;
+        virtual ~IRNode() = default;
+
+        virtual void accept(IRVisitor* visitor) const = 0;
+    };
+
+    class Stmt : public virtual IRNode {
+
     };
 }
 
-#endif//OPFLOW_JIT_EXPRESSION_HPP
+#endif//OPFLOW_JIT_IR_HPP
