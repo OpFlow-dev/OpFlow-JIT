@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// Copyright (c) 2019 - 2022 by the OpFlow developers
+// Copyright (c) 2019 - 2023 by the OpFlow developers
 //
 // This file is part of OpFlow.
 //
@@ -10,14 +10,22 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_EXPRESSION_HPP
-#define OPFLOW_JIT_EXPRESSION_HPP
+#ifndef OPFLOW_JIT_SCALAR_HPP
+#define OPFLOW_JIT_SCALAR_HPP
+
+#include "Expression.hpp"
 
 namespace OpFlow {
-    class Expr {
+
+    class Scalar : public virtual Expr {
     public:
-        virtual ~Expr() = default;
+        Scalar();
+        Scalar(const Scalar& other);
+        ~Scalar() override = default;
+
+        Scalar& operator=(const Scalar& other);
+        Scalar& operator=(const Expr& other);
     };
 }
 
-#endif//OPFLOW_JIT_EXPRESSION_HPP
+#endif//OPFLOW_JIT_SCALAR_HPP
