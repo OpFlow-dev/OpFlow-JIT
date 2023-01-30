@@ -142,7 +142,7 @@ add_library(OpFlow-JIT STATIC src/Expression.cpp
         src/Kernel.cpp
         src/Kernel.hpp
         src/IR.cpp
-        src/IR.hpp)
+        src/IR.hpp src/Field.hpp src/DataType.hpp src/Variable.cpp src/Variable.hpp src/Index.cpp src/Index.hpp)
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC
@@ -221,48 +221,6 @@ if (OPFLOW_WITH_OPENMP)
     target_compile_options(OpFlow-JIT INTERFACE ${OpenMP_CXX_FLAGS})
 
     list(APPEND PKG_CONFIG_REQUIRES OpenMP)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Use HYPRE package
-# ----------------------------------------------------------------------------
-set(HYPRE_BUILD_TYPE Release)
-set(HYPRE_WITH_OPENMP ${OPFLOW_WITH_OPENMP})
-set(HYPRE_ENABLE_SINGLE ${OPFLOW_SINGLE_PRECISION})
-set(HYPRE_WITH_MPI ${OPFLOW_WITH_MPI})
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/hypre/src EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE HYPRE)
-
-# ----------------------------------------------------------------------------
-# Use HDF5 package
-# ----------------------------------------------------------------------------
-if (OPFLOW_WITH_MPI)
-    set(HDF5_PREFER_PARALLEL TRUE)
-endif ()
-set(HDF5_USE_STATIC_LIBRARIES ON)
-include(FindHDF5)
-find_package(HDF5 COMPONENTS C REQUIRED)
-if (HDF5_PREFER_PARALLEL AND NOT HDF5_IS_PARALLEL)
-    message(FATAL_ERROR "Cannot find parallel HDF5 library")
-endif ()
-target_include_directories(OpFlow-JIT INTERFACE ${HDF5_C_INCLUDE_DIRS})
-target_link_libraries(OpFlow-JIT INTERFACE ${HDF5_C_LIBRARIES})
-target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_WITH_HDF5 ${HDF5_C_DEFINITIONS})
-if (OPFLOW_WITH_MPI)
-    target_compile_definitions(OpFlow-JIT INTERFACE H5_HAVE_PARALLEL)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Use TecIO library
-# ----------------------------------------------------------------------------
-if (OPFLOW_WITH_MPI)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/tecio/teciompisrc EXCLUDE_FROM_ALL)
-    target_include_directories(OpFlow-JIT INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/external/tecio/teciompisrc)
-    target_link_libraries(OpFlow-JIT INTERFACE teciompi)
-else ()
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/tecio/teciosrc EXCLUDE_FROM_ALL)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/tecio/teciosrc)
-    target_link_libraries(OpFlow-JIT INTERFACE tecio)
 endif ()
 
 # ----------------------------------------------------------------------------

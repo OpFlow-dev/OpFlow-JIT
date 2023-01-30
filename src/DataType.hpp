@@ -58,6 +58,8 @@ namespace OpFlow {
                 return "f32";
             case DataType::f64:
                 return "f64";
+            case DataType::unknown:
+                return "unknown";
         }
     }
 

@@ -13,11 +13,12 @@
 #ifndef OPFLOW_JIT_SCALAR_HPP
 #define OPFLOW_JIT_SCALAR_HPP
 
-#include "Expression.hpp"
+#include "DataType.hpp"
+#include "Variable.hpp"
 
 namespace OpFlow {
 
-    class Scalar : public virtual Expr {
+    class Scalar : public virtual Var {
     public:
         Scalar();
         Scalar(const Scalar& other);
@@ -25,7 +26,16 @@ namespace OpFlow {
 
         Scalar& operator=(const Scalar& other);
         Scalar& operator=(const Expr& other);
+
+        template <typename T = void>
+        void bind(T* data) {
+            this->elem_type_ = get_runtime_type(*data);
+            data_ = data;
+        }
+
+    private:
+        void* data_ = nullptr;
     };
-}
+}// namespace OpFlow
 
 #endif//OPFLOW_JIT_SCALAR_HPP
