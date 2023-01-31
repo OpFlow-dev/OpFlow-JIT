@@ -20,6 +20,6 @@ namespace OpFlow {
     public:
         [[nodiscard]] bool is_lvalue() const final;
     };
-}
+}// namespace OpFlow
 
 #endif//OPFLOW_JIT_VARIABLE_HPP

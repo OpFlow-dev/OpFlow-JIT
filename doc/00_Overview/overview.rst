@@ -31,4 +31,4 @@ introduce finer controlled thread models, as long as explicit vectorization for 
 performance. Flux and inner product semantics for finite volume method (FVM) and finite
 element method (FEM) are postponed to the later future.
 
-The source code is available under the Apache v2.0 license at https://github.com/OpFlow-dev/OpFlow.
+The source code is available under the Apache-2.0 license at https://github.com/OpFlow-dev/OpFlow.

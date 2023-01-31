@@ -1,22 +1,19 @@
 #!/bin/bash
 ## ---------------------------------------------------------------------
 ##
-## Copyright (c) 2019 - 2022 by the OpFlow developers
+## Copyright (c) 2019 - 2023 by the OpFlow developers
 ## All rights reserved.
 ##
-## This file is part of OpFlow.
+## This file is part of OpFlow-JIT.
 ##
-## OpFlow is free software and is distributed under the Apache v2.0
+## OpFlow-JIT is free software and is distributed under the Apache-2.0
 ## license. The full text of the license can be found in the file
-## LICENSE at the top level directory of OpFlow.
+## LICENSE at the top level directory of OpFlow-JIT.
 ##
 ## ---------------------------------------------------------------------
 
-# Originally based on the IBAMR script of the same name with substantial
-# modifications made to make it apply to OpFlow's needs.
-
-if test ! -d include -o ! -d src ; then
-  echo "*** This script must be run from the top-level directory of OpFlow."
+if test ! -d src ; then
+  echo "*** This script must be run from the top-level directory of OpFlow-JIT."
   exit 1
 fi
 
