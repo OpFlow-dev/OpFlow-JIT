@@ -2,11 +2,11 @@
 //
 // Copyright (c) 2019 - 2023 by the OpFlow developers
 //
-// This file is part of OpFlow.
+// This file is part of OpFlow-JIT.
 //
-// OpFlow is free software and is distributed under the MPL v2.0 license.
+// OpFlow-JIT is free software and is distributed under the Apache-2.0 license.
 // The full text of the license can be found in the file LICENSE at the top
-// level directory of OpFlow.
+// level directory of OpFlow-JIT.
 //
 // ----------------------------------------------------------------------------
 
@@ -19,9 +19,7 @@ namespace OpFlow {
         return program;
     }
 
-    bool Program::is_interactive_mode() const {
-        return interactive_mode && lazy_compile;
-    }
+    bool Program::is_interactive_mode() const { return interactive_mode && lazy_compile; }
 
     Kernel* Program::get_current_kernel() { return current_kernel; }
 

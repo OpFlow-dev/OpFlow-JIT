@@ -13,8 +13,8 @@
 #ifndef OPFLOW_JIT_INDEX_HPP
 #define OPFLOW_JIT_INDEX_HPP
 
-#include <vector>
 #include <initializer_list>
+#include <vector>
 
 namespace OpFlow {
     class Index {
@@ -28,6 +28,6 @@ namespace OpFlow {
     private:
         std::vector<int> indexes_;
     };
-}
+}// namespace OpFlow
 
 #endif//OPFLOW_JIT_INDEX_HPP

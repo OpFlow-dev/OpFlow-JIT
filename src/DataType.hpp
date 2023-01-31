@@ -13,10 +13,10 @@
 #ifndef OPFLOW_JIT_DATATYPE_HPP
 #define OPFLOW_JIT_DATATYPE_HPP
 
+#include "Macros.hpp"
 #include <fmt/format.h>
 #include <string>
 #include <type_traits>
-#include "Macros.hpp"
 
 namespace OpFlow {
     enum class DataType : unsigned int {
@@ -95,7 +95,7 @@ namespace OpFlow {
 
     template <typename T>
     inline DataType get_runtime_type() {
-        return get_runtime_type(T{});
+        return get_runtime_type(T {});
     }
-}
+}// namespace OpFlow
 #endif//OPFLOW_JIT_DATATYPE_HPP

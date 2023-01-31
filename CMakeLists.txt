@@ -1,12 +1,12 @@
 # ----------------------------------------------------------------------------
 #
-# Copyright (c) 2019 - 2022 by the OpFlow developers
+# Copyright (c) 2019 - 2023 by the OpFlow developers
 #
-# This file is part of OpFlow.
+# This file is part of OpFlow-JIT.
 #
-# OpFlow is free software and is distributed under the Apache v2.0 license.
+# OpFlow is free software and is distributed under the Apache-2.0 license.
 # The full text of the license can be found in the file LICENSE at the top
-# level directory of OpFlow.
+# level directory of OpFlow-JIT.
 #
 # ----------------------------------------------------------------------------
 #
@@ -119,6 +119,7 @@ option(OPFLOW_SANITIZE_UB "Enable undefined behavior sanitizer in tests" OFF)
 # compile options
 option(OPFLOW_BUILD_WARNINGS "Enable compiler warnings" OFF)
 option(OPFLOW_NO_EXCEPTIONS "Compile with -fno-exceptions" OFF)
+option(OPFLOW_GEN_COMPILE_COMMANDS "Generate compile_commands.json for IDE integration" ON)
 
 # architecture options
 option(OPFLOW_WITH_OPENMP "Build with OpenMP support" ON)
@@ -129,6 +130,8 @@ option(OPFLOW_WITH_CUDA "Build with CUDA support" OFF)
 option(OPFLOW_INSTALL "Generate the install target" ${OPFLOW_MASTER_PROJECT})
 
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS OPFLOW_GEN_COMPILE_COMMANDS)
 
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target
