@@ -11,11 +11,11 @@
 // ----------------------------------------------------------------------------
 
 #include "Scalar.hpp"
-#include "Macros.hpp"
-#include "Program.hpp"
+#include "lang/program/Program.hpp"
+#include "utils/Macros.hpp"
 
 namespace OpFlow {
-    Scalar &Scalar::operator=(const Expr &other) {
+    Var &Scalar::operator=(const Expr &other) {
         if (this != &other) {
             auto &prog = Program::get_current_program();
             if (auto ker = prog.get_current_kernel()) {
@@ -29,5 +29,8 @@ namespace OpFlow {
         }
         return *this;
     }
+    Scalar::Scalar(double d) { this->elem_type_ = DataType::f64; }
+
+    Scalar::Scalar(float f) { this->elem_type_ = DataType::f32; }
 
 }// namespace OpFlow

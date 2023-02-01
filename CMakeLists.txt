@@ -136,16 +136,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS OPFLOW_GEN_COMPILE_COMMANDS)
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target
 # ----------------------------------------------------------------------------
-add_library(OpFlow-JIT STATIC src/Expression.cpp
-        src/Expression.hpp
-        src/Scalar.cpp
-        src/Scalar.hpp
-        src/Program.cpp
-        src/Program.hpp
-        src/Kernel.cpp
-        src/Kernel.hpp
-        src/IR.cpp
-        src/IR.hpp src/Field.hpp src/DataType.hpp src/Variable.cpp src/Variable.hpp src/Index.cpp src/Index.hpp)
+add_library(OpFlow-JIT STATIC src/lang/semantic/Expression.cpp
+        src/lang/semantic/Expression.hpp
+        src/lang/semantic/Scalar.cpp
+        src/lang/semantic/Scalar.hpp
+        src/lang/program/Program.cpp
+        src/lang/program/Program.hpp
+        src/lang/semantic/Kernel.cpp
+        src/lang/semantic/Kernel.hpp
+        src/lang/ir/IR.cpp
+        src/lang/ir/IR.hpp src/lang/semantic/Field.hpp src/lang/semantic/DataType.hpp src/lang/semantic/Variable.cpp src/lang/semantic/Variable.hpp src/lang/semantic/Index.cpp src/lang/semantic/Index.hpp src/lang/program/Environment.cpp src/lang/program/Environment.hpp src/mesh/Meshes.hpp src/OpFlow.hpp src/lang/semantic/Field.cpp src/mesh/Meshes.cpp src/lang/semantic/Boundary.cpp src/lang/semantic/Boundary.hpp src/ops/FDM/fdms.cpp src/ops/FDM/fdms.hpp src/lang/semantic/Equation.cpp src/lang/semantic/Equation.hpp src/eqnsolve/api/Solve.cpp src/eqnsolve/api/Solve.hpp)
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC

@@ -41,7 +41,7 @@
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 #define SPD_AUGMENTED_LOG(X, ...)                                                                            \
     spdlog::X(fmt::format("[{}:{}@{}] ", __FILENAME__, __FUNCTION__, __LINE__) + fmt::format(__VA_ARGS__))

@@ -10,4 +10,11 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "Kernel.hpp"
+#include "lang/semantic/Expression.hpp"
+#include "lang/semantic/Field.hpp"
+#include "lang/semantic/Index.hpp"
+#include "lang/semantic/Scalar.hpp"
+#include "lang/semantic/Variable.hpp"
+
+#include "lang/program/Environment.hpp"
+#include "lang/program/Program.hpp"

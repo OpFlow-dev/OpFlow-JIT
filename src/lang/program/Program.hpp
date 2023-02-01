@@ -13,7 +13,7 @@
 #ifndef OPFLOW_JIT_PROGRAM_HPP
 #define OPFLOW_JIT_PROGRAM_HPP
 
-#include "Kernel.hpp"
+#include "lang/semantic/Kernel.hpp"
 
 namespace OpFlow {
     /// \brief The concept of a compile target

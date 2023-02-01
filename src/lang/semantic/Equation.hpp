@@ -10,32 +10,28 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_SCALAR_HPP
-#define OPFLOW_JIT_SCALAR_HPP
+#ifndef OPFLOW_JIT_EQUATION_HPP
+#define OPFLOW_JIT_EQUATION_HPP
 
-#include "DataType.hpp"
+#include "Expression.hpp"
 #include "Variable.hpp"
 
 namespace OpFlow {
-
-    class Scalar : public virtual Var {
+    class Equation {
     public:
-        Scalar();
-        Scalar(const Scalar& other);
-        ~Scalar() override = default;
+        Equation() = default;
+        Equation(Expr lhs, Expr rhs);
+        Equation(Expr lhs, Expr rhs, Var& target);
 
-        Scalar& operator=(const Scalar& other);
-        Scalar& operator=(const Expr& other);
-
-        template <typename T = void>
-        void bind(T* data) {
-            this->elem_type_ = get_runtime_type(*data);
-            data_ = data;
-        }
+        void set_equation(Expr lhs, Expr rhs);
+        void set_target(Var& target);
 
     private:
-        void* data_ = nullptr;
+        Expr lhs_, rhs_;
+        Var* target_ = nullptr;
     };
+
+    Equation operator==(const Expr& lhs, const Expr& rhs);
 }// namespace OpFlow
 
-#endif//OPFLOW_JIT_SCALAR_HPP
+#endif//OPFLOW_JIT_EQUATION_HPP

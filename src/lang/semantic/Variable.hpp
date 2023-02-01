@@ -19,6 +19,8 @@ namespace OpFlow {
     class Var : public virtual Expr {
     public:
         [[nodiscard]] bool is_lvalue() const final;
+
+        virtual Var& operator=(const Expr& other) = 0;
     };
 }// namespace OpFlow
 
