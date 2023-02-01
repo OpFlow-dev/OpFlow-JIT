@@ -33,9 +33,11 @@ add_custom_target(AllExamples)
 
 function(add_example example_name)
     add_executable(${example_name} EXCLUDE_FROM_ALL ${ARGN})
-    target_link_libraries(${example_name} OpFlow::OpFlow-JIT)
+    target_link_libraries(${example_name} PUBLIC OpFlow::OpFlow-JIT)
     target_compile_options(${example_name} PRIVATE ${OPFLOW_EXAMPLE_FLAGS})
     add_dependencies(AllExamples ${example_name})
 endfunction()
+
+add_example(FTCS ${CMAKE_CURRENT_LIST_DIR}/FTCS.cpp)
 
 add_dependencies(All_CI AllExamples)

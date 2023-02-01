@@ -13,8 +13,7 @@
 #ifndef OPFLOW_JIT_DATATYPE_HPP
 #define OPFLOW_JIT_DATATYPE_HPP
 
-#include "Macros.hpp"
-#include <fmt/format.h>
+#include <cstdint>
 #include <string>
 #include <type_traits>
 
@@ -84,9 +83,9 @@ namespace OpFlow {
             return DataType::int64;
         } else if constexpr (std::is_same_v<TT, bool>) {
             return DataType::uint8;
-        } else if constexpr (std::is_same_v<TT, std::float_t>) {
+        } else if constexpr (std::is_same_v<TT, float>) {
             return DataType::f32;
-        } else if constexpr (std::is_same_v<TT, std::double_t>) {
+        } else if constexpr (std::is_same_v<TT, double>) {
             return DataType::f64;
         } else {
             return DataType::unknown;

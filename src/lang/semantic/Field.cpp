@@ -10,18 +10,12 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_KERNEL_HPP
-#define OPFLOW_JIT_KERNEL_HPP
-
-#include "IR.hpp"
-#include <memory>
-#include <vector>
+#include "Field.hpp"
 
 namespace OpFlow {
-    class Kernel {
-    public:
-        std::vector<std::unique_ptr<Stmt>> statements;
-    };
-}// namespace OpFlow
+    Field::Field(DataType dt) { this->elem_type_ = dt; }
 
-#endif//OPFLOW_JIT_KERNEL_HPP
+    Field& Field::set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc) { return *this; }
+
+    Var& Field::operator=(const Expr& other) { return *this; }
+}// namespace OpFlow

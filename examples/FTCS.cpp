@@ -10,17 +10,40 @@
 //
 // ----------------------------------------------------------------------------
 
-#include <OpFlow>
+#include "OpFlow.hpp"
+#include "lang/OpLang.hpp"
+#include <iostream>
 
 using namespace OpFlow;
 
 int main(int argc, char** argv) {
     // init environment
-    OpFlow::init(Arch::x86_64);
+    OpFlow::init(Arch::x86_64, Para::SingleNode);
+
     // declare meshes
-    auto mesh = MeshBuilder<CartesianMesh>().build();
-    CartesianField u, v, w;
-    u.placeAt(mesh, center);
-    v.placeAt(mesh, center);
-    w.placeAt(mesh, corner);
+    auto mesh = CartesianMesh::Builder().build();
+
+    Field u(DataType::f32), p(DataType::f64);
+
+    layout([&] { mesh.location(Loc::CellCenter).place(p); });
+
+    p.set_bc(mesh.get_boundary(0, Position::start), std::make_unique<DircBC>(0.));
+    p.set_bc(mesh.get_boundary(0, Position::end), std::make_unique<NeumBC>(0.));
+
+    double alpha = 1.0, dt = 1.0;
+    Expr lhs, rhs;
+    lhs += u;
+    rhs += FDM::d2x(u);
+    rhs *= Scalar(alpha * dt);
+    Solve(lhs == rhs, Solver {});
+
+    auto cal = KernelBuilder().def([&] { u = Scalar(0.1 * dt) * FDM::d2x(u); });
+
+    cal();
+
+    std::cout << u.val<double>({10});
+
+    //dump_to_file(u);
+
+    return 0;
 }

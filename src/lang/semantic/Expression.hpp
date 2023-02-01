@@ -19,27 +19,36 @@
 #include <utility>
 
 namespace OpFlow {
-
     class Expr {
     public:
         virtual ~Expr() = default;
 
-        [[nodiscard]] virtual bool is_lvalue() const = 0;
+        [[nodiscard]] virtual bool is_lvalue() const;
 
         [[nodiscard]] DataType get_elem_type() const;
 
         template <typename T>
         [[nodiscard]] T& val(const Index& index) {
-            auto ptr = data_accessor_(index);
-            OP_ASSERT(ptr);
-            OP_ASSERT(elem_type_ == DataType::unknown || elem_type_ == get_runtime_type<T>());
+            auto ptr = val_impl(index, get_runtime_type<T>());
             return *static_cast<T*>(ptr);
         }
 
+        virtual Expr& operator+=(const Expr& o);
+        virtual Expr& operator-=(const Expr& o);
+        virtual Expr& operator*=(const Expr& o);
+        virtual Expr& operator/=(const Expr& o);
+
     protected:
+        [[nodiscard]] void* val_impl(const Index& index, DataType desire_type);
+
         DataType elem_type_ = DataType::unknown;
         std::function<void*(const Index&)> data_accessor_;
     };
+
+    Expr operator+(const Expr& a, const Expr& b);
+    Expr operator-(const Expr& a, const Expr& b);
+    Expr operator*(const Expr& a, const Expr& b);
+    Expr operator/(const Expr& a, const Expr& b);
 }// namespace OpFlow
 
 #endif//OPFLOW_JIT_EXPRESSION_HPP

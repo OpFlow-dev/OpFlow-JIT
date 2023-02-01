@@ -13,12 +13,20 @@
 #ifndef OPFLOW_JIT_FIELD_HPP
 #define OPFLOW_JIT_FIELD_HPP
 
+#include "Boundary.hpp"
 #include "Variable.hpp"
+#include <memory>
 
 namespace OpFlow {
     class Field : public virtual Var {
     public:
         ~Field() override = default;
+
+        explicit Field(DataType dt);
+
+        Field& set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc);
+
+        Var& operator=(const Expr& other) override;
     };
 }// namespace OpFlow
 

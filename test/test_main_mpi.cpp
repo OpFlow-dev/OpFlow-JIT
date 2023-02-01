@@ -11,7 +11,7 @@
 //  ----------------------------------------------------------------------------
 
 #include "gtest-mpi-listener.hpp"
-#include <OpFlow>
+#include "lang/OpFlow"
 #include <gmock/gmock.h>
 
 int main(int argc, char** argv) {
