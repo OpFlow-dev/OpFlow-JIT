@@ -16,7 +16,7 @@
 #include "Expression.hpp"
 #include "Variable.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Equation {
     public:
         Equation() = default;

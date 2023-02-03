@@ -14,7 +14,7 @@
 #define OPFLOW_JIT_OPFLOW_HPP
 
 #include "lang/semantic/Solve.hpp"
-#include "lang/semantic/mesh/Meshes.hpp"
+#include "lang/semantic/mesh/Mesh.hpp"
 #include "ops/FDM/fdms.hpp"
 
 #endif//OPFLOW_JIT_OPFLOW_HPP

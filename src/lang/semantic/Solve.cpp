@@ -13,7 +13,7 @@
 #include "Solve.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     void Solve(Equation eqn, Solver solver) { OP_NOT_IMPLEMENTED; }
 
 }// namespace OpFlow

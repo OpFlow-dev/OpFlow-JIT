@@ -12,10 +12,28 @@
 
 #include "Field.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     Field::Field(DataType dt) { this->elem_type_ = dt; }
 
     Field& Field::set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc) { return *this; }
 
-    Var& Field::operator=(const Expr& other) { return *this; }
-}// namespace OpFlow
+    Field& Field::operator=(const Expr& other) { return *this; }
+
+    FieldGroup::FieldGroup() = default;
+
+    FieldGroup::FieldGroup(Field& f) : fields_ {&f} {}
+
+    FieldGroup FieldGroup::operator,(Field& f) const & {
+        auto ret = *this;
+        ret.fields_.push_back(&f);
+        return ret;
+    }
+
+    std::vector<Field*>::iterator FieldGroup::begin() { return fields_.begin(); }
+
+    std::vector<Field*>::iterator FieldGroup::end() { return fields_.end(); }
+
+    std::vector<Field*>::const_iterator FieldGroup::begin() const { return fields_.begin(); }
+
+    std::vector<Field*>::const_iterator FieldGroup::end() const { return fields_.end(); }
+}// namespace OpFlow::lang

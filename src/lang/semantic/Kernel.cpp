@@ -13,7 +13,7 @@
 #include "Kernel.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     void Kernel::operator()() const { OP_NOT_IMPLEMENTED; }
 
     Kernel KernelBuilder::def(std::function<void()> ker) { OP_NOT_IMPLEMENTED; }

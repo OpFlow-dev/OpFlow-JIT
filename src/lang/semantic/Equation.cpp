@@ -12,7 +12,7 @@
 
 #include "Equation.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     Equation::Equation(Expr lhs, Expr rhs) : lhs_(lhs), rhs_(rhs) {}
 
     Equation::Equation(Expr lhs, Expr rhs, Var& target) : lhs_(lhs), rhs_(rhs), target_(&target) {}

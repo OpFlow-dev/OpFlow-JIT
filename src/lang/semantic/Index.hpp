@@ -16,7 +16,7 @@
 #include <initializer_list>
 #include <vector>
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Index {
     public:
         Index() = default;

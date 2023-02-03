@@ -14,6 +14,6 @@
 #include <gmock/gmock.h>
 
 TEST(ScalarTest, DeclearTest) {
-    OpFlow::Scalar a {1.0};
+    OpFlow::lang::Scalar a {1.0};
     ASSERT_TRUE(true);
 }

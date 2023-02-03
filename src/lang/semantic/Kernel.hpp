@@ -18,7 +18,7 @@
 #include <memory>
 #include <vector>
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Kernel {
     public:
         void operator()() const;

@@ -13,7 +13,7 @@
 #include "fdms.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow::FDM {
+namespace OpFlow::lang::FDM {
     Expr dx(const Expr& e) {
         OP_NOT_IMPLEMENTED;
         return e;

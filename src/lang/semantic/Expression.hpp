@@ -18,7 +18,7 @@
 #include <functional>
 #include <utility>
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Expr {
     public:
         virtual ~Expr() = default;
