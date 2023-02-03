@@ -10,18 +10,16 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_VARIABLE_HPP
-#define OPFLOW_JIT_VARIABLE_HPP
+#ifndef OPFLOW_JIT_UNSTRUCTUREDMESH_HPP
+#define OPFLOW_JIT_UNSTRUCTUREDMESH_HPP
 
-#include "Expression.hpp"
+#include "Mesh.hpp"
 
 namespace OpFlow::lang {
-    class Var : public virtual Expr {
+    class UnstructuredMesh : public virtual Mesh {
     public:
-        [[nodiscard]] bool is_lvalue() const final;
-
-        virtual Var& operator=(const Expr& other) = 0;
+        ~UnstructuredMesh() noexcept override;
     };
 }// namespace OpFlow::lang
 
-#endif//OPFLOW_JIT_VARIABLE_HPP
+#endif//OPFLOW_JIT_UNSTRUCTUREDMESH_HPP

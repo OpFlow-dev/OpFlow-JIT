@@ -35,7 +35,7 @@ namespace OpFlow::lang {
         FieldGroup();
         FieldGroup(Field& f);
 
-        FieldGroup operator,(Field& f) const &;
+        FieldGroup operator,(Field& f) const&;
 
         std::vector<Field*>::iterator begin();
         std::vector<Field*>::iterator end();
@@ -46,6 +46,6 @@ namespace OpFlow::lang {
     private:
         std::vector<Field*> fields_;
     };
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_FIELD_HPP

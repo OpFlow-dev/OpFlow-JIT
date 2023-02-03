@@ -19,6 +19,6 @@ namespace OpFlow::lang {
     class Solver {};
 
     void Solve(Equation eqn, Solver solver);
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_SOLVE_HPP

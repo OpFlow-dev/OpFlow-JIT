@@ -49,6 +49,6 @@ namespace OpFlow::lang {
     Expr operator-(const Expr& a, const Expr& b);
     Expr operator*(const Expr& a, const Expr& b);
     Expr operator/(const Expr& a, const Expr& b);
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_EXPRESSION_HPP

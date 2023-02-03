@@ -14,4 +14,4 @@
 
 namespace OpFlow::lang {
     bool Var::is_lvalue() const { return true; }
-}// namespace OpFlow
+}// namespace OpFlow::lang

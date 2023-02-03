@@ -23,7 +23,7 @@ namespace OpFlow::lang {
 
     FieldGroup::FieldGroup(Field& f) : fields_ {&f} {}
 
-    FieldGroup FieldGroup::operator,(Field& f) const & {
+    FieldGroup FieldGroup::operator,(Field&f) const & {
         auto ret = *this;
         ret.fields_.push_back(&f);
         return ret;

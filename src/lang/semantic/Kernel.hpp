@@ -29,6 +29,6 @@ namespace OpFlow::lang {
     public:
         Kernel def(std::function<void()> ker);
     };
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_KERNEL_HPP

@@ -28,6 +28,6 @@ namespace OpFlow::lang {
     private:
         std::vector<int> indexes_;
     };
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_INDEX_HPP

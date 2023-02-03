@@ -26,4 +26,4 @@ namespace OpFlow::lang {
     void Program::set_interactive_mode(bool option) { interactive_mode = option; }
 
     void Program::set_lazy_compile(bool option) { lazy_compile = option; }
-}// namespace OpFlow
+}// namespace OpFlow::lang

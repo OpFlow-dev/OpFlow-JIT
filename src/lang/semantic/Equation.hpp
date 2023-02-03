@@ -32,6 +32,6 @@ namespace OpFlow::lang {
     };
 
     Equation operator==(const Expr& lhs, const Expr& rhs);
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_EQUATION_HPP

@@ -17,4 +17,4 @@ namespace OpFlow::lang {
     void Kernel::operator()() const { OP_NOT_IMPLEMENTED; }
 
     Kernel KernelBuilder::def(std::function<void()> ker) { OP_NOT_IMPLEMENTED; }
-}// namespace OpFlow
+}// namespace OpFlow::lang

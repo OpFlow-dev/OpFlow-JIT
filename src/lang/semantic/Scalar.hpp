@@ -38,6 +38,6 @@ namespace OpFlow::lang {
     private:
         void* data_ = nullptr;
     };
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_SCALAR_HPP

@@ -16,4 +16,4 @@
 namespace OpFlow::lang {
     void Solve(Equation eqn, Solver solver) { OP_NOT_IMPLEMENTED; }
 
-}// namespace OpFlow
+}// namespace OpFlow::lang
