@@ -18,6 +18,11 @@ namespace OpFlow {
     enum class Para { SingleNode, Cluster };
 
     void init(Arch arch, Para para);
+
+    class EnvironmentGuardian {
+    public:
+        EnvironmentGuardian(int* argc, char*** argv);
+    };
 }// namespace OpFlow
 
 #endif//OPFLOW_JIT_ENVIRONMENT_HPP

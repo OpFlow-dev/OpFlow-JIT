@@ -10,7 +10,8 @@
 //
 //  ----------------------------------------------------------------------------
 
-#include "lang/OpFlow"
+#include "OpFlow.hpp"
+#include "lang/OpLang.hpp"
 #include <gmock/gmock.h>
 
 int main(int argc, char** argv) {
@@ -18,7 +19,7 @@ int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     // Initialize environment
-    OpFlow::EnvironmentGardian _(&argc, &argv);
+    OpFlow::EnvironmentGuardian _(&argc, &argv);
 
     // Run tests, then clean up and exit. RUN_ALL_TESTS() returns 0 if all tests
     // pass and 1 if some test fails.

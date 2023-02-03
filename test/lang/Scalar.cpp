@@ -10,11 +10,10 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "Environment.hpp"
-#include "utils/Macros.hpp"
+#include "lang/OpLang.hpp"
+#include <gmock/gmock.h>
 
-namespace OpFlow {
-    void init(Arch arch, Para para) { OP_NOT_IMPLEMENTED; }
-
-    EnvironmentGuardian::EnvironmentGuardian(int *argc, char ***argv) {}
-}// namespace OpFlow
+TEST(ScalarTest, DeclearTest) {
+    OpFlow::Scalar a {1.0};
+    ASSERT_TRUE(true);
+}

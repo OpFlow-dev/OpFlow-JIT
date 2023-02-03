@@ -17,7 +17,6 @@
 #include "Variable.hpp"
 
 namespace OpFlow {
-
     class Scalar : public virtual Var {
     public:
         Scalar();
