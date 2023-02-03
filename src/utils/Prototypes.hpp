@@ -10,18 +10,17 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_VARIABLE_HPP
-#define OPFLOW_JIT_VARIABLE_HPP
+#ifndef OPFLOW_JIT_PROTOTYPES_HPP
+#define OPFLOW_JIT_PROTOTYPES_HPP
 
-#include "Expression.hpp"
+#include <memory>
 
-namespace OpFlow::lang {
-    class Var : public virtual Expr {
+namespace OpFlow::internal {
+    template <typename T>
+    class cloneable_object {
     public:
-        [[nodiscard]] bool is_lvalue() const final;
-
-        virtual Var& operator=(const Expr& other) = 0;
+        virtual std::unique_ptr<T> clone() const = 0;
     };
-}// namespace OpFlow::lang
+}// namespace OpFlow::internal
 
-#endif//OPFLOW_JIT_VARIABLE_HPP
+#endif//OPFLOW_JIT_PROTOTYPES_HPP

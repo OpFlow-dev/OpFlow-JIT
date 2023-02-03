@@ -25,4 +25,4 @@ namespace OpFlow::lang {
     void Equation::set_target(Var& target) { target_ = &target; }
 
     Equation operator==(const Expr& lhs, const Expr& rhs) { return {lhs, rhs}; }
-}// namespace OpFlow
+}// namespace OpFlow::lang

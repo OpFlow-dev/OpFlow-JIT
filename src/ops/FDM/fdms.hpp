@@ -18,6 +18,6 @@
 namespace OpFlow::lang::FDM {
     Expr dx(const Expr& e);
     Expr d2x(const Expr& e);
-}// namespace OpFlow::FDM
+}// namespace OpFlow::lang::FDM
 
 #endif//OPFLOW_JIT_FDMS_HPP

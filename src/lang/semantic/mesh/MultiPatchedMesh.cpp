@@ -10,18 +10,8 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_VARIABLE_HPP
-#define OPFLOW_JIT_VARIABLE_HPP
-
-#include "Expression.hpp"
+#include "MultiPatchedMesh.hpp"
 
 namespace OpFlow::lang {
-    class Var : public virtual Expr {
-    public:
-        [[nodiscard]] bool is_lvalue() const final;
-
-        virtual Var& operator=(const Expr& other) = 0;
-    };
-}// namespace OpFlow::lang
-
-#endif//OPFLOW_JIT_VARIABLE_HPP
+    MultiPatchedMesh::~MultiPatchedMesh() noexcept = default;
+}

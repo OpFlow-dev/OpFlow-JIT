@@ -36,6 +36,6 @@ namespace OpFlow::lang {
         bool interactive_mode = false;
         bool lazy_compile = true;
     };
-}// namespace OpFlow
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_PROGRAM_HPP

@@ -33,4 +33,4 @@ namespace OpFlow::lang {
 
     Scalar::Scalar(float f) { this->elem_type_ = DataType::f32; }
 
-}// namespace OpFlow
+}// namespace OpFlow::lang

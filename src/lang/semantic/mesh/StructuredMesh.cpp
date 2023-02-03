@@ -10,15 +10,8 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "Meshes.hpp"
-#include "utils/Macros.hpp"
+#include "StructuredMesh.hpp"
 
-namespace OpFlow {
-    void MeshLocProxy::place(Field &field) { OP_NOT_IMPLEMENTED; }
-
-    BoundaryDescriptor CartesianMesh::get_boundary(int dim, Position pos) const {
-        return BoundaryDescriptor {};
-    }
-
-    void layout(std::function<void()> describer) { OP_NOT_IMPLEMENTED; }
-}// namespace OpFlow
+namespace OpFlow::lang {
+    StructuredMesh::~StructuredMesh() noexcept = default;
+}

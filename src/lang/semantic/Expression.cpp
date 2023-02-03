@@ -66,4 +66,4 @@ namespace OpFlow::lang {
         return ret /= b;
     }
 
-}// namespace OpFlow
+}// namespace OpFlow::lang
