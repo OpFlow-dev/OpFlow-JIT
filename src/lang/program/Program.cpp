@@ -13,7 +13,7 @@
 #include "Program.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     Program& Program::get_current_program() {
         static Program program;
         return program;

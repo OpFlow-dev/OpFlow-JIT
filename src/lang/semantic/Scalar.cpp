@@ -14,7 +14,7 @@
 #include "lang/program/Program.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     Var &Scalar::operator=(const Expr &other) {
         if (this != &other) {
             auto &prog = Program::get_current_program();

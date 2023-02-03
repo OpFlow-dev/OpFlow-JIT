@@ -15,7 +15,7 @@
 
 #include "lang/semantic/Kernel.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     /// \brief The concept of a compile target
     class Program {
     public:

@@ -15,7 +15,7 @@
 
 #include "Expression.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Var : public virtual Expr {
     public:
         [[nodiscard]] bool is_lvalue() const final;

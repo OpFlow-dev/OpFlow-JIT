@@ -14,7 +14,7 @@
 #include "Equation.hpp"
 #include "utils/Macros.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     DataType Expr::get_elem_type() const { return elem_type_; }
 
     void *Expr::val_impl(const Index &index, DataType desire_type) {

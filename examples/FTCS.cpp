@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
     Field u(DataType::f32), p(DataType::f64);
 
-    layout([&] { mesh.location(Loc::CellCenter).place(p); });
+    layout([&] { mesh.location(Loc::Cell).place(p); });
 
     p.set_bc(mesh.get_boundary(0, Position::start), std::make_unique<DircBC>(0.));
     p.set_bc(mesh.get_boundary(0, Position::end), std::make_unique<NeumBC>(0.));

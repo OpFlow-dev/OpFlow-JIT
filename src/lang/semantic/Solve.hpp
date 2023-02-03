@@ -15,7 +15,7 @@
 
 #include "lang/semantic/Equation.hpp"
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Solver {};
 
     void Solve(Equation eqn, Solver solver);

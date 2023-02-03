@@ -16,8 +16,9 @@
 #include "Boundary.hpp"
 #include "Variable.hpp"
 #include <memory>
+#include <vector>
 
-namespace OpFlow {
+namespace OpFlow::lang {
     class Field : public virtual Var {
     public:
         ~Field() override = default;
@@ -26,7 +27,24 @@ namespace OpFlow {
 
         Field& set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc);
 
-        Var& operator=(const Expr& other) override;
+        Field& operator=(const Expr& other) override;
+    };
+
+    class FieldGroup {
+    public:
+        FieldGroup();
+        FieldGroup(Field& f);
+
+        FieldGroup operator,(Field& f) const &;
+
+        std::vector<Field*>::iterator begin();
+        std::vector<Field*>::iterator end();
+
+        [[nodiscard]] std::vector<Field*>::const_iterator begin() const;
+        [[nodiscard]] std::vector<Field*>::const_iterator end() const;
+
+    private:
+        std::vector<Field*> fields_;
     };
 }// namespace OpFlow
 
