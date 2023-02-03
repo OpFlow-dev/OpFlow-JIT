@@ -145,7 +145,7 @@ add_library(OpFlow-JIT STATIC src/lang/semantic/Expression.cpp
         src/lang/semantic/Kernel.cpp
         src/lang/semantic/Kernel.hpp
         src/lang/ir/IR.cpp
-        src/lang/ir/IR.hpp src/lang/semantic/Field.hpp src/lang/semantic/DataType.hpp src/lang/semantic/Variable.cpp src/lang/semantic/Variable.hpp src/lang/semantic/Index.cpp src/lang/semantic/Index.hpp src/lang/program/Environment.cpp src/lang/program/Environment.hpp src/mesh/Meshes.hpp src/OpFlow.hpp src/lang/semantic/Field.cpp src/mesh/Meshes.cpp src/lang/semantic/Boundary.cpp src/lang/semantic/Boundary.hpp src/ops/FDM/fdms.cpp src/ops/FDM/fdms.hpp src/lang/semantic/Equation.cpp src/lang/semantic/Equation.hpp src/eqnsolve/api/Solve.cpp src/eqnsolve/api/Solve.hpp)
+        src/lang/ir/IR.hpp src/lang/semantic/Field.hpp src/lang/semantic/DataType.hpp src/lang/semantic/Variable.cpp src/lang/semantic/Variable.hpp src/lang/semantic/Index.cpp src/lang/semantic/Index.hpp src/lang/program/Environment.cpp src/lang/program/Environment.hpp src/lang/semantic/mesh/Meshes.hpp src/OpFlow.hpp src/lang/semantic/Field.cpp src/lang/semantic/mesh/Meshes.cpp src/lang/semantic/Boundary.cpp src/lang/semantic/Boundary.hpp src/ops/FDM/fdms.cpp src/ops/FDM/fdms.hpp src/lang/semantic/Equation.cpp src/lang/semantic/Equation.hpp src/lang/semantic/Solve.cpp src/lang/semantic/Solve.hpp)
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC
