@@ -13,9 +13,10 @@
 #ifndef OPFLOW_JIT_MESH_HPP
 #define OPFLOW_JIT_MESH_HPP
 
-#include "lang/semantic/Boundary.hpp"
 #include "lang/semantic/Field.hpp"
+#include "lang/semantic/bc/Boundary.hpp"
 #include "utils/Prototypes.hpp"
+#include "lang/semantic/mesh/BoundaryDescriptor.hpp"
 #include <functional>
 
 namespace OpFlow::lang {
@@ -48,6 +49,7 @@ namespace OpFlow::lang {
 
         [[nodiscard]] virtual int dimension() const = 0;
         [[nodiscard]] virtual int index_dimension() const = 0;
+        [[nodiscard]] virtual std::vector<std::unique_ptr<BoundaryDescriptor>> get_boundaries() const = 0;
 
     protected:
         bool is_dynamic_ = false;

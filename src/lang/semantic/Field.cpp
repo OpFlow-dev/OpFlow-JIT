@@ -15,7 +15,7 @@
 namespace OpFlow::lang {
     Field::Field(DataType dt) { this->elem_type_ = dt; }
 
-    Field& Field::set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc) { return *this; }
+    Field& Field::set_bc(BoundaryDescriptor* descriptor, std::unique_ptr<BC>&& bc) { return *this; }
 
     Field& Field::operator=(const Expr& other) { return *this; }
 

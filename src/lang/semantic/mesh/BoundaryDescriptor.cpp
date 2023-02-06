@@ -10,9 +10,4 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_OPFLOW_HPP
-#define OPFLOW_JIT_OPFLOW_HPP
-
-#include "ops/FDM/fdms.hpp"
-
-#endif//OPFLOW_JIT_OPFLOW_HPP
+#include "BoundaryDescriptor.hpp"

@@ -14,15 +14,14 @@
 #define OPFLOW_JIT_BOUNDARY_HPP
 
 namespace OpFlow {
-    class BoundaryDescriptor {};
-
     enum class BCType { Dirc, Neum, Robin };
 
     class BC {
     public:
         BC() = default;
+        virtual ~BC() = default;
 
-        virtual BCType get_type() const = 0;
+        [[nodiscard]] virtual BCType get_type() const = 0;
     };
 
     class DircBC : public virtual BC {

@@ -14,7 +14,13 @@
 #include "lang/semantic/Field.hpp"
 #include "lang/semantic/Index.hpp"
 #include "lang/semantic/Scalar.hpp"
+#include "lang/semantic/Solve.hpp"
 #include "lang/semantic/Variable.hpp"
+#include "lang/semantic/mesh/CartesianMesh.hpp"
+#include "lang/semantic/mesh/Mesh.hpp"
+#include "lang/semantic/mesh/MultiPatchedMesh.hpp"
+#include "lang/semantic/mesh/StructuredMesh.hpp"
+#include "lang/semantic/mesh/UnstructuredMesh.hpp"
 
 #include "lang/program/Environment.hpp"
 #include "lang/program/Program.hpp"
