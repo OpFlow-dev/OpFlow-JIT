@@ -10,13 +10,18 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
-#define OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+#include "MeshProxy.hpp"
+#include "lang/semantic/Field.hpp"
 
 namespace OpFlow::lang {
-    class BoundaryDescriptor {
-    public:
-    };
-}// namespace OpFlow::lang
+    MeshLocDescriptor::MeshLocDescriptor() = default;
 
-#endif//OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+    MeshProxy::MeshProxy(const Mesh *mesh, MeshLocDescriptor descriptor)
+        : mesh_(mesh), descriptor_(descriptor) {}
+
+    void MeshProxy::place(Field &field) { field.bind_to_mesh(this->mesh_, this->descriptor_); }
+
+    void MeshProxy::place(FieldGroup &fieldGroup) {
+        for (auto &f : fieldGroup) { place(*f); }
+    }
+}// namespace OpFlow::lang

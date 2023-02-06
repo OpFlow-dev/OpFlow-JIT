@@ -27,8 +27,7 @@ namespace OpFlow::lang {
     std::vector<std::unique_ptr<BoundaryDescriptor>> CartesianMesh::get_boundaries() const {
         std::vector<std::unique_ptr<BoundaryDescriptor>> ret;
         for (int i = 0; i < dimension(); ++i) {
-            for (auto pos : {Position::start, Position::end})
-                ret.push_back(get_boundary(i, pos));
+            for (auto pos : {Position::start, Position::end}) ret.push_back(get_boundary(i, pos));
         }
         return ret;
     }

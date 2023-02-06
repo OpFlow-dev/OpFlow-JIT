@@ -17,6 +17,11 @@ namespace OpFlow::lang {
 
     Field& Field::set_bc(BoundaryDescriptor* descriptor, std::unique_ptr<BC>&& bc) { return *this; }
 
+    void Field::bind_to_mesh(const Mesh* mesh, const MeshLocDescriptor& descriptor) {
+        mesh_ = mesh;
+        mesh_loc_descriptor_ = descriptor;
+    }
+
     Field& Field::operator=(const Expr& other) { return *this; }
 
     FieldGroup::FieldGroup() = default;

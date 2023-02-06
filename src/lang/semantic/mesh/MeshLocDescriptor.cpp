@@ -10,13 +10,4 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
-#define OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
-
-namespace OpFlow::lang {
-    class BoundaryDescriptor {
-    public:
-    };
-}// namespace OpFlow::lang
-
-#endif//OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+#include "MeshLocDescriptor.hpp"
