@@ -16,6 +16,7 @@
 #include "Variable.hpp"
 #include "lang/semantic/bc/Boundary.hpp"
 #include "lang/semantic/mesh/BoundaryDescriptor.hpp"
+#include "lang/semantic/mesh/MeshLocDescriptor.hpp"
 #include <memory>
 #include <vector>
 
@@ -28,7 +29,13 @@ namespace OpFlow::lang {
 
         Field& set_bc(BoundaryDescriptor* descriptor, std::unique_ptr<BC>&& bc);
 
+        void bind_to_mesh(const Mesh* mesh, const MeshLocDescriptor& descriptor);
+
         Field& operator=(const Expr& other) override;
+
+    private:
+        const Mesh* mesh_ = nullptr;
+        MeshLocDescriptor mesh_loc_descriptor_;
     };
 
     class FieldGroup {

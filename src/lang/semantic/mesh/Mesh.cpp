@@ -14,17 +14,10 @@
 #include "utils/Macros.hpp"
 
 namespace OpFlow::lang {
-    MeshLocProxy::MeshLocProxy() = default;
-
-    void MeshLocProxy::place(Field &field) { OP_NOT_IMPLEMENTED; }
-
-    void MeshLocProxy::place(FieldGroup &fieldGroup) {
-        for (auto &f : fieldGroup) { place(*f); }
-    }
-
     Mesh::Mesh() = default;
     Mesh::~Mesh() noexcept = default;
-    MeshLocProxy Mesh::location(LocOnMesh loc) { return MeshLocProxy(this, loc); }
+    MeshProxy Mesh::location(LocOnMesh loc) { return {this, MeshLocDescriptor {this, loc}}; }
+
     bool Mesh::is_dynamic() const { return is_dynamic_; }
     void Mesh::mark_as_dynamic() { is_dynamic_ = true; }
 

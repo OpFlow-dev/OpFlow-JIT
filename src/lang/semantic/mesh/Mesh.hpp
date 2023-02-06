@@ -15,35 +15,18 @@
 
 #include "lang/semantic/Field.hpp"
 #include "lang/semantic/bc/Boundary.hpp"
-#include "utils/Prototypes.hpp"
 #include "lang/semantic/mesh/BoundaryDescriptor.hpp"
+#include "lang/semantic/mesh/MeshProxy.hpp"
+#include "utils/Prototypes.hpp"
 #include <functional>
 
 namespace OpFlow::lang {
-    enum class LocOnMesh { Cell, Edge, Vertex, Undefined };
-    enum class Position { start, end };
-
-    class Mesh;
-
-    class MeshLocProxy {
-    public:
-        MeshLocProxy();
-        explicit MeshLocProxy(const Mesh* mesh, LocOnMesh loc) : base_mesh_(mesh), loc_(loc) {}
-
-        void place(Field& field);
-        void place(FieldGroup& fieldGroup);
-
-    private:
-        LocOnMesh loc_ = LocOnMesh::Undefined;
-        const Mesh* base_mesh_ = nullptr;
-    };
-
     class Mesh : public virtual internal::cloneable_object<Mesh> {
     public:
         Mesh();
         virtual ~Mesh() noexcept;
 
-        MeshLocProxy location(LocOnMesh loc);
+        MeshProxy location(LocOnMesh loc);
         [[nodiscard]] bool is_dynamic() const;
         void mark_as_dynamic();
 

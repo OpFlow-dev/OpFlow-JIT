@@ -10,13 +10,24 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
-#define OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+#ifndef OPFLOW_JIT_MESHLOCDESCRIPTOR_HPP
+#define OPFLOW_JIT_MESHLOCDESCRIPTOR_HPP
 
 namespace OpFlow::lang {
-    class BoundaryDescriptor {
+    enum class LocOnMesh { Cell, Edge, Vertex, Undefined };
+    enum class Position { start, end };
+
+    class Mesh;
+
+    class MeshLocDescriptor {
     public:
+        MeshLocDescriptor();
+        explicit MeshLocDescriptor(const Mesh* mesh, LocOnMesh loc) : base_mesh_(mesh), loc_(loc) {}
+
+    private:
+        LocOnMesh loc_ = LocOnMesh::Undefined;
+        const Mesh* base_mesh_ = nullptr;
     };
 }// namespace OpFlow::lang
 
-#endif//OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+#endif//OPFLOW_JIT_MESHLOCDESCRIPTOR_HPP
