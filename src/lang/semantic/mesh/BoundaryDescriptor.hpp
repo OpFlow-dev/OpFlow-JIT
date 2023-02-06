@@ -10,9 +10,14 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_OPFLOW_HPP
-#define OPFLOW_JIT_OPFLOW_HPP
+#ifndef OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
+#define OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP
 
-#include "ops/FDM/fdms.hpp"
+namespace OpFlow::lang {
+    class BoundaryDescriptor {
+    public:
 
-#endif//OPFLOW_JIT_OPFLOW_HPP
+    };
+}
+
+#endif//OPFLOW_JIT_BOUNDARYDESCRIPTOR_HPP

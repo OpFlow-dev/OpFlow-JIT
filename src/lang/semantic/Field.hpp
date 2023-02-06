@@ -13,8 +13,9 @@
 #ifndef OPFLOW_JIT_FIELD_HPP
 #define OPFLOW_JIT_FIELD_HPP
 
-#include "Boundary.hpp"
 #include "Variable.hpp"
+#include "lang/semantic/bc/Boundary.hpp"
+#include "lang/semantic/mesh/BoundaryDescriptor.hpp"
 #include <memory>
 #include <vector>
 
@@ -25,7 +26,7 @@ namespace OpFlow::lang {
 
         explicit Field(DataType dt);
 
-        Field& set_bc(BoundaryDescriptor descriptor, std::unique_ptr<BC>&& bc);
+        Field& set_bc(BoundaryDescriptor* descriptor, std::unique_ptr<BC>&& bc);
 
         Field& operator=(const Expr& other) override;
     };

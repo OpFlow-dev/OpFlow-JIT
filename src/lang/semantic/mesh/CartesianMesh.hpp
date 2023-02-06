@@ -26,6 +26,8 @@ namespace OpFlow::lang {
 
         [[nodiscard]] double x(int d, int pos) const;
         [[nodiscard]] bool is_uniform(int d) const;
+        [[nodiscard]] std::vector<std::unique_ptr<BoundaryDescriptor>> get_boundaries() const override;
+        [[nodiscard]] std::unique_ptr<BoundaryDescriptor> get_boundary(int d, Position pos) const;
 
         friend MeshBuilder<CartesianMesh>;
 
@@ -46,6 +48,17 @@ namespace OpFlow::lang {
 
     private:
         CartesianMesh mesh_;
+    };
+
+    class CartMeshBoundary : public virtual BoundaryDescriptor {
+    public:
+        CartMeshBoundary();
+        CartMeshBoundary(const CartesianMesh& mesh, int d, Position pos);
+
+    private:
+        const CartesianMesh* mesh_ = nullptr;
+        int d_ = 0;
+        Position pos_ = Position::start;
     };
 }// namespace OpFlow::lang
 

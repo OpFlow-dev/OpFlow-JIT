@@ -11,6 +11,8 @@
 // ----------------------------------------------------------------------------
 
 #include "CartesianMesh.hpp"
+#include "utils/Macros.hpp"
+
 namespace OpFlow::lang {
     CartesianMesh::~CartesianMesh() noexcept = default;
 
@@ -21,6 +23,19 @@ namespace OpFlow::lang {
 
     double CartesianMesh::x(int d, int pos) const { return coord_[d][pos]; }
     bool CartesianMesh::is_uniform(int d) const { return is_uniform_[d]; }
+
+    std::vector<std::unique_ptr<BoundaryDescriptor>> CartesianMesh::get_boundaries() const {
+        std::vector<std::unique_ptr<BoundaryDescriptor>> ret;
+        for (int i = 0; i < dimension(); ++i) {
+            for (auto pos : {Position::start, Position::end})
+                ret.push_back(get_boundary(i, pos));
+        }
+        return ret;
+    }
+
+    std::unique_ptr<BoundaryDescriptor> CartesianMesh::get_boundary(int d, Position pos) const {
+        return std::make_unique<CartMeshBoundary>(*this, d, pos);
+    }
 
     using Builder = MeshBuilder<CartesianMesh>;
 
@@ -51,4 +66,8 @@ namespace OpFlow::lang {
     }
 
     CartesianMesh Builder ::build() const { return mesh_; }
+
+    CartMeshBoundary::CartMeshBoundary() = default;
+    CartMeshBoundary::CartMeshBoundary(const CartesianMesh& mesh, int d, Position pos)
+        : mesh_(&mesh), d_(d), pos_(pos) {}
 }// namespace OpFlow::lang

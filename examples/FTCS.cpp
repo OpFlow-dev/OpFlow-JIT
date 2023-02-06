@@ -15,20 +15,21 @@
 #include <iostream>
 
 using namespace OpFlow;
+using namespace OpFlow::lang;
 
 int main(int argc, char** argv) {
     // init environment
     OpFlow::init(Arch::x86_64, Para::SingleNode);
 
     // declare meshes
-    auto mesh = CartesianMesh::Builder().build();
+    auto mesh = MeshBuilder<CartesianMesh>().build();
 
     Field u(DataType::f32), p(DataType::f64);
 
-    layout([&] { mesh.location(Loc::Cell).place(p); });
+    layout([&] { mesh.location(LocOnMesh::Cell).place(p); });
 
-    p.set_bc(mesh.get_boundary(0, Position::start), std::make_unique<DircBC>(0.));
-    p.set_bc(mesh.get_boundary(0, Position::end), std::make_unique<NeumBC>(0.));
+    p.set_bc(mesh.get_boundary(0, Position::start).get(), std::make_unique<DircBC>(0.));
+    p.set_bc(mesh.get_boundary(0, Position::end).get(), std::make_unique<NeumBC>(0.));
 
     double alpha = 1.0, dt = 1.0;
     Expr lhs, rhs;
