@@ -23,6 +23,5 @@ namespace OpFlow::lang {
 
     void layout(const std::function<void()> &describer) {
         describer();
-        OP_NOT_IMPLEMENTED;
     }
 }// namespace OpFlow::lang
