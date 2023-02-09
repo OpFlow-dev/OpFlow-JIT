@@ -18,7 +18,8 @@ namespace OpFlow::lang {
     DataType Expr::get_elem_type() const { return elem_type_; }
 
     void *Expr::val_impl(const Index &index, DataType desire_type) {
-        auto ptr = data_accessor_(index);
+        OP_ASSERT_MSG(data_accessor_, "Data accessor for expr not loaded.");
+        auto ptr = data_accessor_ ? data_accessor_(index) : nullptr;
         OP_ASSERT(ptr);
         OP_ASSERT(elem_type_ == DataType::unknown || elem_type_ == desire_type);
         return ptr;
