@@ -10,22 +10,11 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_KERNEL_HPP
-#define OPFLOW_JIT_KERNEL_HPP
-
-#include "lang/ir/IRNode.hpp"
-#include <functional>
+#include "Block.hpp"
 
 namespace OpFlow::lang {
-    class Kernel {
-    public:
-        void operator()() const;
-    };
+    Block::Block() = default;
+    Block::~Block() noexcept = default;
 
-    class KernelBuilder {
-    public:
-        Kernel def(std::function<void()> ker);
-    };
+    void Block::accept(IRVisitor *visitor) { visitor->visit(this); }
 }// namespace OpFlow::lang
-
-#endif//OPFLOW_JIT_KERNEL_HPP

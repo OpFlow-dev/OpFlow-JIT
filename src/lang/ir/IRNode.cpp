@@ -10,22 +10,6 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_KERNEL_HPP
-#define OPFLOW_JIT_KERNEL_HPP
+#include "IRNode.hpp"
 
-#include "lang/ir/IRNode.hpp"
-#include <functional>
-
-namespace OpFlow::lang {
-    class Kernel {
-    public:
-        void operator()() const;
-    };
-
-    class KernelBuilder {
-    public:
-        Kernel def(std::function<void()> ker);
-    };
-}// namespace OpFlow::lang
-
-#endif//OPFLOW_JIT_KERNEL_HPP
+namespace OpFlow::lang {}// namespace OpFlow::lang

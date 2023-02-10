@@ -10,21 +10,15 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_IR_HPP
-#define OPFLOW_JIT_IR_HPP
+#ifndef OPFLOW_JIT_IRVISITOR_HPP
+#define OPFLOW_JIT_IRVISITOR_HPP
 
-namespace OpFlow {
-    class IRVisitor;
-
-    class IRNode {
+namespace OpFlow::lang {
+    class IRNode;
+    class IRVisitor {
     public:
-        IRNode() = default;
-        virtual ~IRNode() = default;
-
-        virtual void accept(IRVisitor* visitor) const = 0;
+        virtual void visit(IRNode* irNode) const = 0;
     };
+}
 
-    class Stmt : public virtual IRNode {};
-}// namespace OpFlow
-
-#endif//OPFLOW_JIT_IR_HPP
+#endif//OPFLOW_JIT_IRVISITOR_HPP
