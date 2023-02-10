@@ -10,17 +10,17 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "lang/semantic/Expression.hpp"
-#include "lang/semantic/Field.hpp"
-#include "lang/semantic/Index.hpp"
-#include "lang/semantic/Scalar.hpp"
-#include "lang/semantic/Solve.hpp"
-#include "lang/semantic/Variable.hpp"
-#include "lang/semantic/mesh/CartesianMesh.hpp"
-#include "lang/semantic/mesh/Mesh.hpp"
-#include "lang/semantic/mesh/MultiPatchedMesh.hpp"
-#include "lang/semantic/mesh/StructuredMesh.hpp"
-#include "lang/semantic/mesh/UnstructuredMesh.hpp"
+#include "lang/frontend/Expression.hpp"
+#include "lang/frontend/Field.hpp"
+#include "lang/frontend/Index.hpp"
+#include "lang/frontend/Scalar.hpp"
+#include "lang/frontend/Solve.hpp"
+#include "lang/frontend/Variable.hpp"
+#include "lang/frontend/mesh/CartesianMesh.hpp"
+#include "lang/frontend/mesh/Mesh.hpp"
+#include "lang/frontend/mesh/MultiPatchedMesh.hpp"
+#include "lang/frontend/mesh/StructuredMesh.hpp"
+#include "lang/frontend/mesh/UnstructuredMesh.hpp"
 
 #include "lang/program/Environment.hpp"
 #include "lang/program/Program.hpp"

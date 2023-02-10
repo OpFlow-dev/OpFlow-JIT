@@ -10,15 +10,26 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_SOLVE_HPP
-#define OPFLOW_JIT_SOLVE_HPP
+#ifndef OPFLOW_JIT_MESHPROXY_HPP
+#define OPFLOW_JIT_MESHPROXY_HPP
 
-#include "lang/semantic/Equation.hpp"
+#include "lang/frontend/Field.hpp"
+#include "lang/frontend/mesh/MeshLocDescriptor.hpp"
 
 namespace OpFlow::lang {
-    class Solver {};
+    class Mesh;
 
-    void Solve(Equation eqn, Solver solver);
+    class MeshProxy {
+    public:
+        MeshProxy(const Mesh* mesh, MeshLocDescriptor descriptor);
+
+        void place(Field& field);
+        void place(FieldGroup& group);
+
+    private:
+        MeshLocDescriptor descriptor_;
+        const Mesh* mesh_ = nullptr;
+    };
 }// namespace OpFlow::lang
 
-#endif//OPFLOW_JIT_SOLVE_HPP
+#endif//OPFLOW_JIT_MESHPROXY_HPP
