@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------------
 
 #include "MeshProxy.hpp"
-#include "lang/semantic/Field.hpp"
+#include "lang/frontend/Field.hpp"
 
 namespace OpFlow::lang {
     MeshLocDescriptor::MeshLocDescriptor() = default;

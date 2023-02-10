@@ -14,9 +14,9 @@
 #define OPFLOW_JIT_FIELD_HPP
 
 #include "Variable.hpp"
-#include "lang/semantic/bc/Boundary.hpp"
-#include "lang/semantic/mesh/BoundaryDescriptor.hpp"
-#include "lang/semantic/mesh/MeshLocDescriptor.hpp"
+#include "lang/frontend/bc/Boundary.hpp"
+#include "lang/frontend/mesh/BoundaryDescriptor.hpp"
+#include "lang/frontend/mesh/MeshLocDescriptor.hpp"
 #include <memory>
 #include <vector>
 

@@ -13,7 +13,7 @@
 #ifndef OPFLOW_JIT_FDMS_HPP
 #define OPFLOW_JIT_FDMS_HPP
 
-#include "lang/semantic/Expression.hpp"
+#include "lang/frontend/Expression.hpp"
 
 namespace OpFlow::lang::FDM {
     Expr dx(const Expr& e);

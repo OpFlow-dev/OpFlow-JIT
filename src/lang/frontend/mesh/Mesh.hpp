@@ -13,10 +13,10 @@
 #ifndef OPFLOW_JIT_MESH_HPP
 #define OPFLOW_JIT_MESH_HPP
 
-#include "lang/semantic/Field.hpp"
-#include "lang/semantic/bc/Boundary.hpp"
-#include "lang/semantic/mesh/BoundaryDescriptor.hpp"
-#include "lang/semantic/mesh/MeshProxy.hpp"
+#include "lang/frontend/Field.hpp"
+#include "lang/frontend/bc/Boundary.hpp"
+#include "lang/frontend/mesh/BoundaryDescriptor.hpp"
+#include "lang/frontend/mesh/MeshProxy.hpp"
 #include "utils/Prototypes.hpp"
 #include <functional>
 
