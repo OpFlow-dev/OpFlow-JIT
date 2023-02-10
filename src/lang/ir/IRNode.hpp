@@ -10,22 +10,24 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_KERNEL_HPP
-#define OPFLOW_JIT_KERNEL_HPP
+#ifndef OPFLOW_JIT_IRNODE_HPP
+#define OPFLOW_JIT_IRNODE_HPP
 
-#include "lang/ir/IRNode.hpp"
-#include <functional>
+#include <atomic>
+#include <string>
+#include <type_traits>
+#include <vector>
+#include "lang/pass/IRVisitor.hpp"
 
 namespace OpFlow::lang {
-    class Kernel {
+    class IRNode {
     public:
-        void operator()() const;
-    };
+        IRNode() = default;
+        virtual ~IRNode() noexcept = default;
 
-    class KernelBuilder {
-    public:
-        Kernel def(std::function<void()> ker);
+        virtual void accept(IRVisitor* visitor) = 0;
+        [[nodiscard]] virtual std::string type_name() const { return "IRNode"; }
     };
 }// namespace OpFlow::lang
 
-#endif//OPFLOW_JIT_KERNEL_HPP
+#endif//OPFLOW_JIT_IRNODE_HPP

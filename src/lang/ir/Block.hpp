@@ -10,4 +10,24 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "IR.hpp"
+#ifndef OPFLOW_JIT_BLOCK_HPP
+#define OPFLOW_JIT_BLOCK_HPP
+
+#include "lang/ir/IRNode.hpp"
+#include "lang/ir/Stmt.hpp"
+#include <memory>
+
+namespace OpFlow::lang {
+    class Block : public virtual IRNode {
+    public:
+        Block();
+        ~Block() noexcept override;
+
+        void accept(IRVisitor *visitor) override;
+
+    private:
+        std::vector<std::unique_ptr<Stmt>> statements_;
+    };
+}// namespace OpFlow::lang
+
+#endif//OPFLOW_JIT_BLOCK_HPP
