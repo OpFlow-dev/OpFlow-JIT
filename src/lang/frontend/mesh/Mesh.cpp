@@ -21,7 +21,5 @@ namespace OpFlow::lang {
     bool Mesh::is_dynamic() const { return is_dynamic_; }
     void Mesh::mark_as_dynamic() { is_dynamic_ = true; }
 
-    void layout(const std::function<void()> &describer) {
-        describer();
-    }
+    void layout(const std::function<void()> &describer) { describer(); }
 }// namespace OpFlow::lang

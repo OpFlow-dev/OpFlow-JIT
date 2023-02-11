@@ -10,18 +10,11 @@
 //
 // ----------------------------------------------------------------------------
 
-#ifndef OPFLOW_JIT_IRPRINTER_HPP
-#define OPFLOW_JIT_IRPRINTER_HPP
-
-#include "lang/pass/IRVisitor.hpp"
+#ifndef OPFLOW_JIT_RUNTIMECONTEXT_HPP
+#define OPFLOW_JIT_RUNTIMECONTEXT_HPP
 
 namespace OpFlow::lang {
-    class IRPrinter : public virtual IRVisitor {
-    public:
-        void visit(IRNode* irNode) const override;
-
-        static void run(IRNode* root);
-    };
+    class RuntimeContext {};
 }// namespace OpFlow::lang
 
-#endif//OPFLOW_JIT_IRPRINTER_HPP
+#endif//OPFLOW_JIT_RUNTIMECONTEXT_HPP

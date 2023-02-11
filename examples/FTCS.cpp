@@ -12,6 +12,7 @@
 
 #include "OpFlow.hpp"
 #include "lang/OpLang.hpp"
+#include "lang/pass/IRPrinter.hpp"
 #include <iostream>
 
 using namespace OpFlow;
@@ -38,13 +39,11 @@ int main(int argc, char** argv) {
     rhs *= Scalar(alpha * dt);
     Solve(lhs == rhs, Solver {});
 
-    auto cal = KernelBuilder().def([&] { u = Scalar(0.1 * dt) * FDM::d2x(u); });
+    auto cal = Kernel([&] {});
 
     cal();
 
     std::cout << u.val<double>({10});
-
-    //dump_to_file(u);
 
     return 0;
 }

@@ -51,4 +51,5 @@ namespace OpFlow::lang {
     bool Stmt::operator==(const Stmt& other) const { return id_ == other.id_; }
 
     void Stmt::accept(IRVisitor* visitor) { visitor->visit(this); }
+    void Stmt::set_parent(Block* parent) { parent_ = parent; }
 }// namespace OpFlow::lang

@@ -13,18 +13,25 @@
 #ifndef OPFLOW_JIT_KERNEL_HPP
 #define OPFLOW_JIT_KERNEL_HPP
 
+#include "lang/ir/Block.hpp"
 #include "lang/ir/IRNode.hpp"
+#include "lang/program/IRBuilder.hpp"
+#include "lang/program/RuntimeContext.hpp"
 #include <functional>
+#include <memory>
 
 namespace OpFlow::lang {
     class Kernel {
     public:
+        explicit Kernel(const std::function<void()>& func);
+        void compile() const;
         void operator()() const;
-    };
 
-    class KernelBuilder {
-    public:
-        Kernel def(std::function<void()> ker);
+    private:
+        std::unique_ptr<Block> ir_root_ = nullptr;
+        std::unique_ptr<IRBuilder> ir_builder_ = nullptr;
+
+        mutable std::function<void(RuntimeContext*)> compiled_kernel_;
     };
 }// namespace OpFlow::lang
 
