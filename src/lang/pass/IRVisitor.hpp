@@ -19,6 +19,6 @@ namespace OpFlow::lang {
     public:
         virtual void visit(IRNode* irNode) const = 0;
     };
-}
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_IRVISITOR_HPP

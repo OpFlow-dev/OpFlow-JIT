@@ -13,11 +13,11 @@
 #ifndef OPFLOW_JIT_IRNODE_HPP
 #define OPFLOW_JIT_IRNODE_HPP
 
+#include "lang/pass/IRVisitor.hpp"
 #include <atomic>
 #include <string>
 #include <type_traits>
 #include <vector>
-#include "lang/pass/IRVisitor.hpp"
 
 namespace OpFlow::lang {
     class IRNode {

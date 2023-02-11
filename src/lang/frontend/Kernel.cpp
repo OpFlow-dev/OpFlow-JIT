@@ -11,10 +11,30 @@
 // ----------------------------------------------------------------------------
 
 #include "Kernel.hpp"
+#include "lang/pass/IRPrinter.hpp"
+#include "lang/program/Program.hpp"
 #include "utils/Macros.hpp"
 
 namespace OpFlow::lang {
-    void Kernel::operator()() const { OP_NOT_IMPLEMENTED; }
+    Kernel::Kernel(const std::function<void()> &func) {
+        ir_root_ = std::make_unique<Block>();
+        ir_builder_ = std::make_unique<IRBuilder>(ir_root_.get());
+        IRBuilder::set_current_builder(ir_builder_.get());
+        func();
+        if (!Program::get_current_program().is_lazy_compile()) compile();
+    }
 
-    Kernel KernelBuilder::def(std::function<void()> ker) { OP_NOT_IMPLEMENTED; }
+    void Kernel::operator()() const {
+        if (!compiled_kernel_) compile();
+        Program::get_current_program().set_current_kernel(this);
+        auto ctx = Program::get_current_program().get_context();
+        compiled_kernel_(&ctx);
+        Program::get_current_program().set_current_kernel(nullptr);
+    }
+
+    void Kernel::compile() const {
+        IRPrinter::run(ir_root_.get());
+        compiled_kernel_ = [](auto &&) {};
+        OP_NOT_IMPLEMENTED;
+    }
 }// namespace OpFlow::lang

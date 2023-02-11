@@ -19,11 +19,10 @@ namespace OpFlow::lang {
         return program;
     }
 
-    bool Program::is_interactive_mode() const { return interactive_mode && lazy_compile; }
+    const Kernel* Program::get_current_kernel() const { return current_kernel_; }
 
-    Kernel* Program::get_current_kernel() { return current_kernel; }
-
-    void Program::set_interactive_mode(bool option) { interactive_mode = option; }
-
-    void Program::set_lazy_compile(bool option) { lazy_compile = option; }
+    void Program::set_lazy_compile(bool option) { lazy_compile_ = option; }
+    bool Program::is_lazy_compile() const { return lazy_compile_; }
+    RuntimeContext Program::get_context() { return RuntimeContext(); }
+    void Program::set_current_kernel(const Kernel* kernel) { current_kernel_ = kernel; }
 }// namespace OpFlow::lang

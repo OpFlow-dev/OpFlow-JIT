@@ -31,6 +31,7 @@ namespace OpFlow::lang {
 
         Block* get_parent_block();
         [[nodiscard]] const Block* get_parent_block() const;
+        void set_parent(Block* parent);
 
         [[nodiscard]] std::string get_name() const;
         [[nodiscard]] std::string get_raw_name() const;
@@ -66,6 +67,6 @@ namespace OpFlow::lang {
         static std::atomic_int instance_counter_;
         std::vector<Stmt*> operands_;
     };
-}
+}// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_STMT_HPP
