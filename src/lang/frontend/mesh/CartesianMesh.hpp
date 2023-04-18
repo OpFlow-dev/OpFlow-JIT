@@ -14,6 +14,7 @@
 #define OPFLOW_JIT_CARTESIANMESH_HPP
 
 #include "StructuredMesh.hpp"
+#include "lang/frontend/mesh/MeshLocDescriptor.hpp"
 #include <vector>
 
 namespace OpFlow::lang {

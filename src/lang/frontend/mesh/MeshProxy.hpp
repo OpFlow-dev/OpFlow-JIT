@@ -21,13 +21,13 @@ namespace OpFlow::lang {
 
     class MeshProxy {
     public:
-        MeshProxy(const Mesh* mesh, MeshLocDescriptor descriptor);
+        MeshProxy(const Mesh* mesh, LocOnMesh loc);
 
         void place(Field& field);
         void place(FieldGroup& group);
 
     private:
-        MeshLocDescriptor descriptor_;
+        LocOnMesh loc_;
         const Mesh* mesh_ = nullptr;
     };
 }// namespace OpFlow::lang

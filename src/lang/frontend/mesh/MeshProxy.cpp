@@ -14,12 +14,9 @@
 #include "lang/frontend/Field.hpp"
 
 namespace OpFlow::lang {
-    MeshLocDescriptor::MeshLocDescriptor() = default;
+    MeshProxy::MeshProxy(const Mesh *mesh, LocOnMesh loc) : mesh_(mesh), loc_(loc) {}
 
-    MeshProxy::MeshProxy(const Mesh *mesh, MeshLocDescriptor descriptor)
-        : mesh_(mesh), descriptor_(descriptor) {}
-
-    void MeshProxy::place(Field &field) { field.bind_to_mesh(this->mesh_, this->descriptor_); }
+    void MeshProxy::place(Field &field) { field.bind_to_mesh(this->mesh_, this->loc_); }
 
     void MeshProxy::place(FieldGroup &fieldGroup) {
         for (auto &f : fieldGroup) { place(*f); }
