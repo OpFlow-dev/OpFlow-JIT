@@ -10,17 +10,17 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "OpFlow.hpp"
-#include "lang/OpLang.hpp"
-#include "lang/pass/IRPrinter.hpp"
+#include <OpFlow.hpp>
 #include <iostream>
+#include <lang/OpLang.hpp>
 
 using namespace OpFlow;
 using namespace OpFlow::lang;
 
 int main(int argc, char** argv) {
     // init environment
-    OpFlow::init(Arch::x86_64, Para::SingleNode);
+    Environment::init(argc, argv);
+    Environment::setMode(OpFlow::Arch::x86_64, OpFlow::Para::SingleNode);
 
     // declare meshes
     auto mesh = MeshBuilder<CartesianMesh>().build();
@@ -39,11 +39,13 @@ int main(int argc, char** argv) {
     rhs *= Scalar(alpha * dt);
     Solve(lhs == rhs, Solver {});
 
-    auto cal = Kernel([&] {});
+    //auto cal = KernelBuilder().def([&] { u = Scalar(0.1 * dt) * FDM::d2x(u); });
 
-    cal();
+    //cal();
 
     std::cout << u.val<double>({10});
+
+    //dump_to_file(u);
 
     return 0;
 }

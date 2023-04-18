@@ -17,11 +17,17 @@ namespace OpFlow {
     enum class Arch { x86_64, CUDA };
     enum class Para { SingleNode, Cluster };
 
-    void init(Arch arch, Para para);
-
-    class EnvironmentGuardian {
+    class Environment {
     public:
-        EnvironmentGuardian(int* argc, char*** argv);
+        static void init(int argc, char** argv);
+
+        static void setMode(Arch arch, Para para);
+
+    private:
+        Environment() = default;
+        static Environment& getInstance();
+        Arch arch_ = Arch::x86_64;
+        Para para_ = Para::SingleNode;
     };
 }// namespace OpFlow
 
