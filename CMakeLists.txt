@@ -136,16 +136,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS OPFLOW_GEN_COMPILE_COMMANDS)
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target
 # ----------------------------------------------------------------------------
-add_library(OpFlow-JIT STATIC src/lang/frontend/Expression.cpp
-        src/lang/frontend/Expression.hpp
-        src/lang/frontend/Scalar.cpp
-        src/lang/frontend/Scalar.hpp
-        src/lang/program/Program.cpp
-        src/lang/program/Program.hpp
-        src/lang/frontend/Kernel.cpp
-        src/lang/frontend/Kernel.hpp
-        src/lang/ir/IRNode.cpp
-        src/lang/ir/IRNode.hpp src/lang/frontend/Field.hpp src/lang/frontend/DataType.hpp src/lang/frontend/Variable.cpp src/lang/frontend/Variable.hpp src/lang/frontend/Index.cpp src/lang/frontend/Index.hpp src/lang/program/Environment.cpp src/lang/program/Environment.hpp src/lang/frontend/mesh/Mesh.hpp src/OpFlow.hpp src/lang/frontend/Field.cpp src/lang/frontend/mesh/Mesh.cpp src/lang/frontend/bc/Boundary.cpp src/lang/frontend/bc/Boundary.hpp src/ops/FDM/fdms.cpp src/ops/FDM/fdms.hpp src/lang/frontend/Equation.cpp src/lang/frontend/Equation.hpp src/lang/frontend/Solve.cpp src/lang/frontend/Solve.hpp src/lang/frontend/mesh/StructuredMesh.cpp src/lang/frontend/mesh/StructuredMesh.hpp src/utils/Prototypes.hpp src/lang/frontend/mesh/CartesianMesh.cpp src/lang/frontend/mesh/CartesianMesh.hpp src/lang/frontend/mesh/UnstructuredMesh.cpp src/lang/frontend/mesh/UnstructuredMesh.hpp src/lang/frontend/mesh/MultiPatchedMesh.cpp src/lang/frontend/mesh/MultiPatchedMesh.hpp src/lang/frontend/mesh/BoundaryDescriptor.cpp src/lang/frontend/mesh/BoundaryDescriptor.hpp src/lang/frontend/mesh/MeshProxy.cpp src/lang/frontend/mesh/MeshProxy.hpp src/lang/frontend/mesh/MeshLocDescriptor.cpp src/lang/frontend/mesh/MeshLocDescriptor.hpp src/lang/pass/IRVisitor.cpp src/lang/pass/IRVisitor.hpp src/lang/ir/Stmt.cpp src/lang/ir/Stmt.hpp src/lang/ir/Block.cpp src/lang/ir/Block.hpp src/lang/pass/IRPrinter.cpp src/lang/pass/IRPrinter.hpp src/lang/program/IRBuilder.cpp src/lang/program/IRBuilder.hpp src/lang/program/RuntimeContext.cpp src/lang/program/RuntimeContext.hpp)
+file(GLOB_RECURSE OPFLOW_SRC src/*.cpp)
+add_library(OpFlow-JIT STATIC ${OPFLOW_SRC})
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC
