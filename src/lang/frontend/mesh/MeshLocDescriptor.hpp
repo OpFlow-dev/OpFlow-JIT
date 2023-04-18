@@ -14,20 +14,8 @@
 #define OPFLOW_JIT_MESHLOCDESCRIPTOR_HPP
 
 namespace OpFlow::lang {
-    enum class LocOnMesh { Cell, Edge, Vertex, Undefined };
     enum class Position { start, end };
-
-    class Mesh;
-
-    class MeshLocDescriptor {
-    public:
-        MeshLocDescriptor();
-        explicit MeshLocDescriptor(const Mesh* mesh, LocOnMesh loc) : base_mesh_(mesh), loc_(loc) {}
-
-    private:
-        LocOnMesh loc_ = LocOnMesh::Undefined;
-        const Mesh* base_mesh_ = nullptr;
-    };
+    enum class LocOnMesh { Cell, XEdge, YEdge, ZEdge, XFace, YFace, ZFace, Vertex, Undefined };
 }// namespace OpFlow::lang
 
 #endif//OPFLOW_JIT_MESHLOCDESCRIPTOR_HPP

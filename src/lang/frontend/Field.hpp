@@ -21,6 +21,8 @@
 #include <vector>
 
 namespace OpFlow::lang {
+    class Mesh;
+
     class Field : public virtual Var {
     public:
         ~Field() override = default;
@@ -29,13 +31,13 @@ namespace OpFlow::lang {
 
         Field& set_bc(BoundaryDescriptor* descriptor, std::unique_ptr<BC>&& bc);
 
-        void bind_to_mesh(const Mesh* mesh, const MeshLocDescriptor& descriptor);
+        void bind_to_mesh(const Mesh* mesh, LocOnMesh loc);
 
         Field& operator=(const Expr& other) override;
 
     private:
         const Mesh* mesh_ = nullptr;
-        MeshLocDescriptor mesh_loc_descriptor_;
+        LocOnMesh loc_;
     };
 
     class FieldGroup {

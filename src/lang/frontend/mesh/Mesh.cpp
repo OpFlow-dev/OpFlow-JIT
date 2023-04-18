@@ -16,7 +16,7 @@
 namespace OpFlow::lang {
     Mesh::Mesh() = default;
     Mesh::~Mesh() noexcept = default;
-    MeshProxy Mesh::location(LocOnMesh loc) { return {this, MeshLocDescriptor {this, loc}}; }
+    MeshProxy Mesh::location(LocOnMesh loc) { return {this, loc}; }
 
     bool Mesh::is_dynamic() const { return is_dynamic_; }
     void Mesh::mark_as_dynamic() { is_dynamic_ = true; }
