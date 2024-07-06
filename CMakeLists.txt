@@ -164,22 +164,6 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/amgcl EXCLUDE_FROM_ALL)
 target_link_libraries(OpFlow-JIT PRIVATE amgcl::amgcl)
 
 # ----------------------------------------------------------------------------
-# Use TBB
-# ----------------------------------------------------------------------------
-if (OPFLOW_TBB_EXTERNAL)
-    if (NOT DEFINED TBB_DIR)
-        message(FATAL "Variable TBB_DIR not defined. Use -DTBB_DIR to specify TBB's install path.")
-    endif ()
-    find_package(TBB REQUIRED PATHS ${TBB_DIR} NO_DEFAULT_PATH)
-else ()
-    set(BUILD_SHARED_LIBS ON)
-    set(TBB_TEST OFF)
-    set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
-    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/tbb EXCLUDE_FROM_ALL)
-endif ()
-target_link_libraries(OpFlow-JIT INTERFACE TBB::tbb)
-
-# ----------------------------------------------------------------------------
 # Find MPI
 # ----------------------------------------------------------------------------
 if (OPFLOW_WITH_MPI)
