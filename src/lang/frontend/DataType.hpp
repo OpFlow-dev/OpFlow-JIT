@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// Copyright (c) 2019 - 2023 by the OpFlow developers
+// Copyright (c) 2019 - 2024 by the OpFlow developers
 //
 // This file is part of OpFlow-JIT.
 //
@@ -30,6 +30,7 @@ namespace OpFlow {
         f16,
         f32,
         f64,
+        bl,
         unknown
     };
 
@@ -57,13 +58,16 @@ namespace OpFlow {
                 return "f32";
             case DataType::f64:
                 return "f64";
+            case DataType::bl:
+                return "bool";
             case DataType::unknown:
                 return "unknown";
         }
+        return "unknown";
     }
 
     template <typename T>
-    inline DataType get_runtime_type(T&&) {
+    DataType get_runtime_type(T&&) {
         using TT = std::remove_cv_t<std::remove_reference_t<T>>;
         if constexpr (std::is_same_v<TT, std::uint8_t>) {
             return DataType::uint8;
@@ -82,7 +86,7 @@ namespace OpFlow {
         } else if constexpr (std::is_same_v<TT, std::int64_t>) {
             return DataType::int64;
         } else if constexpr (std::is_same_v<TT, bool>) {
-            return DataType::uint8;
+            return DataType::bl;
         } else if constexpr (std::is_same_v<TT, float>) {
             return DataType::f32;
         } else if constexpr (std::is_same_v<TT, double>) {
@@ -93,7 +97,7 @@ namespace OpFlow {
     }
 
     template <typename T>
-    inline DataType get_runtime_type() {
+    DataType get_runtime_type() {
         return get_runtime_type(T {});
     }
 }// namespace OpFlow
