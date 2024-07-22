@@ -12,7 +12,7 @@
 
 #include "Stmt.hpp"
 #include "utils/Macros.hpp"
-#include <fmt/format.h>
+#include <format>
 
 namespace OpFlow::lang {
     std::atomic_int Stmt::instance_counter_ = 0;

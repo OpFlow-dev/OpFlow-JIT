@@ -13,7 +13,7 @@
 #include "IRPrinter.hpp"
 #include "lang/ir/IRNode.hpp"
 #include "utils/Macros.hpp"
-#include <fmt/format.h>
+#include <format>
 
 namespace OpFlow::lang {
     void IRPrinter::visit(IRNode *irNode) const {
