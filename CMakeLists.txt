@@ -146,22 +146,11 @@ target_include_directories(OpFlow-JIT PUBLIC
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 # ----------------------------------------------------------------------------
-# Use fmt package
-# ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/fmt EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE fmt::fmt)
-
-# ----------------------------------------------------------------------------
 # Use spdlog package
 # ----------------------------------------------------------------------------
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/spdlog EXCLUDE_FROM_ALL)
 target_link_libraries(OpFlow-JIT PRIVATE spdlog::spdlog)
 
-# ----------------------------------------------------------------------------
-# Use AMGCL
-# ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/amgcl EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE amgcl::amgcl)
 
 # ----------------------------------------------------------------------------
 # Find MPI
