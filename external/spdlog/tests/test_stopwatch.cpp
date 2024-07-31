@@ -2,7 +2,8 @@
 #include "test_sink.h"
 #include "spdlog/stopwatch.h"
 
-TEST_CASE("stopwatch1", "[stopwatch]") {
+TEST_CASE("stopwatch1", "[stopwatch]")
+{
     using std::chrono::milliseconds;
     using clock = std::chrono::steady_clock;
     milliseconds wait_ms(200);
@@ -16,7 +17,8 @@ TEST_CASE("stopwatch1", "[stopwatch]") {
     REQUIRE(sw.elapsed() <= diff_ms + tolerance_ms);
 }
 
-TEST_CASE("stopwatch2", "[stopwatch]") {
+TEST_CASE("stopwatch2", "[stopwatch]")
+{
     using spdlog::sinks::test_sink_st;
     using std::chrono::duration_cast;
     using std::chrono::milliseconds;
