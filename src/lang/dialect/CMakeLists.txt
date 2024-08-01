@@ -1,0 +1,6 @@
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.20)
+  cmake_policy(SET CMP0116 OLD)
+endif()
+include(TableGen)
+include(AddMLIR)
+add_mlir_dialect(OpLang OpLang)
