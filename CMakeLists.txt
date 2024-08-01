@@ -19,9 +19,11 @@ cmake_minimum_required(VERSION 3.13)
 # ----------------------------------------------------------------------------
 # Start OpFlow-JIT project
 # ----------------------------------------------------------------------------
-include(cmake/Utils.cmake)
-include(cmake/IDE.cmake)
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+if (NOT MLIR_DIR)
+    message(FATAL_ERROR "MLIR_DIR not set")
+endif()
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${MLIR_DIR}")
+include(Utils)
 
 opflow_extract_version()
 
@@ -98,7 +100,7 @@ endif ()
 option(OPFLOW_BUILD_ALL "Build all artifacts" OFF)
 
 # example options
-option(OPFLOW_BUILD_EXAMPLES "Build OpFlow's example cases" OFF)
+option(OPFLOW_BUILD_EXAMPLES "Build OpFlow's example cases" ON)
 
 # document options
 option(OPFLOW_BUILD_DOCS "Build OpFlow's document" OFF)
@@ -121,23 +123,18 @@ option(OPFLOW_BUILD_WARNINGS "Enable compiler warnings" OFF)
 option(OPFLOW_NO_EXCEPTIONS "Compile with -fno-exceptions" OFF)
 option(OPFLOW_GEN_COMPILE_COMMANDS "Generate compile_commands.json for IDE integration" ON)
 
-# architecture options
-option(OPFLOW_WITH_OPENMP "Build with OpenMP support" ON)
-option(OPFLOW_WITH_MPI "Build with MPI support" OFF)
-option(OPFLOW_WITH_CUDA "Build with CUDA support" OFF)
-
 # install options
 option(OPFLOW_INSTALL "Generate the install target" ${OPFLOW_MASTER_PROJECT})
 
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS OPFLOW_GEN_COMPILE_COMMANDS)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ${OPFLOW_GEN_COMPILE_COMMANDS})
 
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target
 # ----------------------------------------------------------------------------
 file(GLOB_RECURSE OPFLOW_SRC src/*.cpp)
-add_library(OpFlow-JIT STATIC ${OPFLOW_SRC})
+add_library(OpFlow-JIT SHARED ${OPFLOW_SRC})
 add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
 
 target_include_directories(OpFlow-JIT PUBLIC
@@ -148,48 +145,15 @@ target_include_directories(OpFlow-JIT PUBLIC
 # ----------------------------------------------------------------------------
 # Use spdlog package
 # ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/spdlog EXCLUDE_FROM_ALL)
+find_package(spdlog REQUIRED)
 target_link_libraries(OpFlow-JIT PRIVATE spdlog::spdlog)
 
-
 # ----------------------------------------------------------------------------
-# Find MPI
+# Use MLIR package
 # ----------------------------------------------------------------------------
-if (OPFLOW_WITH_MPI)
-    find_package(MPI REQUIRED)
-    target_link_libraries(OpFlow-JIT PRIVATE MPI::MPI_C MPI::MPI_CXX)
-
-    list(APPEND PKG_CONFIG_REQUIRES MPI)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Find OpenMP
-# ----------------------------------------------------------------------------
-if (OPFLOW_WITH_OPENMP)
-    # workarounds for CI to find the correct libomp
-    if (APPLE)
-        if (EXISTS /usr/local/opt/llvm/lib)
-            link_directories("/usr/local/opt/llvm/lib")
-        endif ()
-    endif ()
-    if (CMAKE_C_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_C "${CMAKE_C_COMPILER}")
-        set(OpenMP_C_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
-        set(OpenMP_C_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY ${OpenMP_C_LIB_NAMES})
-    endif ()
-    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
-        set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
-        set(OpenMP_CXX_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-    endif ()
-    find_package(OpenMP REQUIRED)
-    target_link_libraries(OpFlow-JIT INTERFACE OpenMP::OpenMP_C OpenMP::OpenMP_CXX)
-    target_compile_options(OpFlow-JIT INTERFACE ${OpenMP_CXX_FLAGS})
-
-    list(APPEND PKG_CONFIG_REQUIRES OpenMP)
-endif ()
+find_package(MLIR REQUIRED)
+include(AddMLIR)
+find_program(MLIRTG NAMES mlir-tblgen-18 mlir-tblgen)
 
 # ----------------------------------------------------------------------------
 # Platform detection
@@ -210,20 +174,6 @@ check_include_files("sys/mman.h" HAS_SYS_MMAN_H)
 if (HAS_SYS_MMAN_H)
     target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_HAS_MMAN_H)
 endif ()
-
-# ----------------------------------------------------------------------------
-# Misc definitions according to tweak options
-# ----------------------------------------------------------------------------
-foreach (
-        OPFLOW_OPTION
-        OPFLOW_SINGLE_PRECISION
-        OPFLOW_WITH_MPI
-        OPFLOW_WITH_OPENMP
-        OPFLOW_WITH_CUDA)
-    if (${OPFLOW_OPTION})
-        target_compile_definitions(OpFlow-JIT INTERFACE ${OPFLOW_OPTION})
-    endif ()
-endforeach ()
 
 if (OPFLOW_NO_EXCEPTIONS AND NOT MSVC)
     target_compile_options(OpFlow-JIT INTERFACE -fno-exceptions)

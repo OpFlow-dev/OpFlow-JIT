@@ -2,7 +2,10 @@
     "cmake.configureSettings": {
         "OPFLOW_BUILD_TESTS" : "ON",
         "OPFLOW_BUILD_EXAMPLES" : "ON",
-        "OPFLOW_WITH_HDF5" : "ON"
+        "MLIR_DIR" : "/usr/lib/llvm-18/lib/cmake/mlir"
     },
+    "mlir.tablegen_compilation_databases": [
+        "build/debug/tablegen_compile_commands.yml"
+    ],
     "cmake.buildDirectory": "${workspaceFolder}/build/${variant:buildType}"
 }

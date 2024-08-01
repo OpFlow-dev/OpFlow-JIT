@@ -9,17 +9,3 @@ buildType:
       short: Release
       long: Release
       buildType: Release
-
-mpi:
-  default: none
-  choices:
-    none:
-      short: None
-      long: Without MPI
-      settings:
-        {"OPFLOW_WITH_MPI" : "OFF"}
-    mpi:
-      short: MPI
-      long: With MPI
-      settings:
-        {"OPFLOW_WITH_MPI" : "ON"}
