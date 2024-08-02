@@ -14,14 +14,13 @@
 #
 # ----------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.20)
 
 # ----------------------------------------------------------------------------
 # Start OpFlow-JIT project
 # ----------------------------------------------------------------------------
-include(cmake/Utils.cmake)
-include(cmake/IDE.cmake)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(Utils)
 
 opflow_extract_version()
 
@@ -98,7 +97,7 @@ endif ()
 option(OPFLOW_BUILD_ALL "Build all artifacts" OFF)
 
 # example options
-option(OPFLOW_BUILD_EXAMPLES "Build OpFlow's example cases" OFF)
+option(OPFLOW_BUILD_EXAMPLES "Build OpFlow's example cases" ON)
 
 # document options
 option(OPFLOW_BUILD_DOCS "Build OpFlow's document" OFF)
@@ -121,136 +120,38 @@ option(OPFLOW_BUILD_WARNINGS "Enable compiler warnings" OFF)
 option(OPFLOW_NO_EXCEPTIONS "Compile with -fno-exceptions" OFF)
 option(OPFLOW_GEN_COMPILE_COMMANDS "Generate compile_commands.json for IDE integration" ON)
 
-# architecture options
-option(OPFLOW_WITH_OPENMP "Build with OpenMP support" ON)
-option(OPFLOW_WITH_MPI "Build with MPI support" OFF)
-option(OPFLOW_WITH_CUDA "Build with CUDA support" OFF)
-
 # install options
 option(OPFLOW_INSTALL "Generate the install target" ${OPFLOW_MASTER_PROJECT})
 
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS OPFLOW_GEN_COMPILE_COMMANDS)
-
-# ----------------------------------------------------------------------------
-# Declare the OpFlow-JIT target
-# ----------------------------------------------------------------------------
-file(GLOB_RECURSE OPFLOW_SRC src/*.cpp)
-add_library(OpFlow-JIT STATIC ${OPFLOW_SRC})
-add_library(OpFlow::OpFlow-JIT ALIAS OpFlow-JIT)
-
-target_include_directories(OpFlow-JIT PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-
-# ----------------------------------------------------------------------------
-# Use fmt package
-# ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/fmt EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE fmt::fmt)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ${OPFLOW_GEN_COMPILE_COMMANDS})
 
 # ----------------------------------------------------------------------------
 # Use spdlog package
 # ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/spdlog EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE spdlog::spdlog)
+find_package(spdlog REQUIRED CONFIG)
+message(STATUS "Found spdlog ${spdlog_PACKAGE_VERSION}")
+message(STATUS "Using spdlogConfig.cmake in ${spdlog_DIR}")
 
 # ----------------------------------------------------------------------------
-# Use AMGCL
+# Use MLIR package
 # ----------------------------------------------------------------------------
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/amgcl EXCLUDE_FROM_ALL)
-target_link_libraries(OpFlow-JIT PRIVATE amgcl::amgcl)
+find_package(MLIR REQUIRED CONFIG)
+message(STATUS "Found MLIR ${MLIR_PACKAGE_VERSION}")
+message(STATUS "Using MLIRConfig.cmake in ${MLIR_DIR}")
+find_program(MLIRTG NAMES mlir-tblgen-18 mlir-tblgen)
+message(STATUS "Found mlir-tblgen ${MLIRTG}")
+find_package(LLVM REQUIRED CONFIG)
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+list(APPEND CMAKE_MODULE_PATH "${MLIR_CMAKE_DIR}")
+list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
 
 # ----------------------------------------------------------------------------
-# Find MPI
+# Declare the OpFlow-JIT target
 # ----------------------------------------------------------------------------
-if (OPFLOW_WITH_MPI)
-    find_package(MPI REQUIRED)
-    target_link_libraries(OpFlow-JIT PRIVATE MPI::MPI_C MPI::MPI_CXX)
-
-    list(APPEND PKG_CONFIG_REQUIRES MPI)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Find OpenMP
-# ----------------------------------------------------------------------------
-if (OPFLOW_WITH_OPENMP)
-    # workarounds for CI to find the correct libomp
-    if (APPLE)
-        if (EXISTS /usr/local/opt/llvm/lib)
-            link_directories("/usr/local/opt/llvm/lib")
-        endif ()
-    endif ()
-    if (CMAKE_C_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_C "${CMAKE_C_COMPILER}")
-        set(OpenMP_C_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
-        set(OpenMP_C_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY ${OpenMP_C_LIB_NAMES})
-    endif ()
-    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
-        set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
-        set(OpenMP_CXX_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
-    endif ()
-    find_package(OpenMP REQUIRED)
-    target_link_libraries(OpFlow-JIT INTERFACE OpenMP::OpenMP_C OpenMP::OpenMP_CXX)
-    target_compile_options(OpFlow-JIT INTERFACE ${OpenMP_CXX_FLAGS})
-
-    list(APPEND PKG_CONFIG_REQUIRES OpenMP)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Platform detection
-# ----------------------------------------------------------------------------
-if (UNIX)
-    target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_PLATFORM_UNIX)
-elseif (APPLE)
-    target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_PLATFORM_APPLE)
-elseif (WIN32)
-    target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_PLATFORM_WIN)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Language & library features detection
-# ----------------------------------------------------------------------------
-include(CheckIncludeFiles)
-check_include_files("sys/mman.h" HAS_SYS_MMAN_H)
-if (HAS_SYS_MMAN_H)
-    target_compile_definitions(OpFlow-JIT INTERFACE OPFLOW_HAS_MMAN_H)
-endif ()
-
-# ----------------------------------------------------------------------------
-# Misc definitions according to tweak options
-# ----------------------------------------------------------------------------
-foreach (
-        OPFLOW_OPTION
-        OPFLOW_SINGLE_PRECISION
-        OPFLOW_WITH_MPI
-        OPFLOW_WITH_OPENMP
-        OPFLOW_WITH_CUDA)
-    if (${OPFLOW_OPTION})
-        target_compile_definitions(OpFlow-JIT INTERFACE ${OPFLOW_OPTION})
-    endif ()
-endforeach ()
-
-if (OPFLOW_NO_EXCEPTIONS AND NOT MSVC)
-    target_compile_options(OpFlow-JIT INTERFACE -fno-exceptions)
-endif ()
-
-# sanitizer flags
-target_compile_options(OpFlow-JIT
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_ADDRESS}>: -fsanitize=address>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_LEAK}>: -fsanitize=leak>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_THREAD}>: -fsanitize=thread>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_UB}>: -fsanitize=undefined>)
-target_link_options(OpFlow-JIT
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_ADDRESS}>: -fsanitize=address>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_LEAK}>: -fsanitize=leak>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_THREAD}>: -fsanitize=thread>
-        PRIVATE $<$<BOOL:${OPFLOW_SANITIZE_UB}>: -fsanitize=undefined>)
+add_subdirectory(src)
 
 # ----------------------------------------------------------------------------
 # All_CI target (= AllExamples + AllBenchmarks + AllTests)
@@ -279,11 +180,6 @@ endif ()
 # ----------------------------------------------------------------------------
 if (OPFLOW_BUILD_BENCHMARKS OR OPFLOW_BUILD_ALL)
     message(STATUS "Generating benchmarks")
-    # config google benchmark as part of the project
-    set(BENCHMARK_ENABLE_INSTALL OFF)
-    set(BENCHMARK_ENABLE_TESTING OFF)
-    set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
-    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/benchmark EXCLUDE_FROM_ALL)
     add_subdirectory(benchmark)
 endif ()
 
@@ -329,49 +225,6 @@ if (OPFLOW_BUILD_DOCS OR OPFLOW_BUILD_ALL)
             ${CMAKE_CURRENT_LIST_DIR}/doc ${CMAKE_CURRENT_BINARY_DIR}/doc
             DEPENDS doxygen_doc
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-endif ()
-
-# ----------------------------------------------------------------------------
-# Install
-# ----------------------------------------------------------------------------
-if (OPFLOW_INSTALL)
-    message(STATUS "Generating install")
-    IF (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}" CACHE PATH "" FORCE)
-        message(STATUS "Install prefix set to: ${CMAKE_INSTALL_PREFIX}")
-    ENDIF (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(project_config_in "${CMAKE_CURRENT_LIST_DIR}/cmake/OpFlowConfig.cmake.in")
-    set(project_config_out "${CMAKE_CURRENT_BINARY_DIR}/OpFlowConfig.cmake")
-    set(config_targets_file "OpFlowConfigTargets.cmake")
-    set(version_config_file "${CMAKE_CURRENT_BINARY_DIR}/OpFlowConfigVersion.cmake")
-    set(export_dest_dir "${CMAKE_INSTALL_LIBDIR}/cmake/OpFlow-JIT")
-    set(pkgconfig_install_dir "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-    set(pkg_config "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc")
-
-    # ----------------------------------------------------------------------------
-    # Include files
-    # ----------------------------------------------------------------------------
-    install(
-            TARGETS OpFlow-JIT
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
-    # ----------------------------------------------------------------------------
-    # Install CMake config files
-    # ----------------------------------------------------------------------------
-    #install(EXPORT OpFlow-JIT DESTINATION ${export_dest_dir} NAMESPACE OpFlow-JIT:: FILE ${config_targets_file})
-
-    include(CMakePackageConfigHelpers)
-    configure_file("${project_config_in}" "${project_config_out}" @ONLY)
-
-    write_basic_package_version_file("${version_config_file}" COMPATIBILITY SameMajorVersion)
-    install(FILES "${project_config_out}" "${version_config_file}" DESTINATION "${export_dest_dir}")
-
-    # ----------------------------------------------------------------------------
-    # Support creation of installable packages
-    # ----------------------------------------------------------------------------
-    #include(cmake/opflowCPack.cmake)
 endif ()
 
 # uninstall target
