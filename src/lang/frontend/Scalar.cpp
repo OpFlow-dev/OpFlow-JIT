@@ -15,9 +15,7 @@
 
 namespace OpFlow::lang {
     Var &Scalar::operator=(const Expr &other) {
-        if (this != &other) {
-            OP_NOT_IMPLEMENTED;
-        }
+        if (this != &other) { OP_NOT_IMPLEMENTED; }
         return *this;
     }
     Scalar::Scalar(double d) { this->elem_type_ = DataType::f64; }
