@@ -180,11 +180,6 @@ endif ()
 # ----------------------------------------------------------------------------
 if (OPFLOW_BUILD_BENCHMARKS OR OPFLOW_BUILD_ALL)
     message(STATUS "Generating benchmarks")
-    # config google benchmark as part of the project
-    set(BENCHMARK_ENABLE_INSTALL OFF)
-    set(BENCHMARK_ENABLE_TESTING OFF)
-    set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
-    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/benchmark EXCLUDE_FROM_ALL)
     add_subdirectory(benchmark)
 endif ()
 

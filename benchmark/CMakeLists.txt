@@ -17,6 +17,8 @@ if (NOT TARGET OpFlow-JIT)
     find_package(OpFlow-JIT REQUIRED)
 endif ()
 
+find_package(benchmakr REQUIRED CONFIG)
+
 add_custom_target(AllBenchmarks)
 
 function(add_bench name)
