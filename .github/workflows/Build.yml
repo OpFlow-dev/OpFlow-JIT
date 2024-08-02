@@ -74,7 +74,8 @@ jobs:
                     -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ..
             fi
           else
-            cmake -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..
+            cmake -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ \
+              -DMLIR_DIR=/usr/lib/llvm-18/lib/cmake/mlir -DGTest_DIR=/usr/lib/x86_64-linux-gnu/cmake/GTest ..
           fi
           if [ "$RUNNER_OS" == "Linux" ]; then
             cmake --build . -t All_CI OpFlow-JIT --parallel 2 --config ${{ matrix.mode }}
