@@ -14,15 +14,12 @@
 #
 # ----------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.20)
 
 # ----------------------------------------------------------------------------
 # Start OpFlow-JIT project
 # ----------------------------------------------------------------------------
-if (NOT MLIR_DIR)
-    message(FATAL_ERROR "MLIR_DIR not set")
-endif()
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${MLIR_DIR}")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(Utils)
 
 opflow_extract_version()
@@ -133,17 +130,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ${OPFLOW_GEN_COMPILE_COMMANDS})
 # ----------------------------------------------------------------------------
 # Use spdlog package
 # ----------------------------------------------------------------------------
-find_package(spdlog REQUIRED)
+find_package(spdlog REQUIRED CONFIG)
+message(STATUS "Found spdlog ${spdlog_PACKAGE_VERSION}")
+message(STATUS "Using spdlogConfig.cmake in ${spdlog_DIR}")
 
 # ----------------------------------------------------------------------------
 # Use MLIR package
 # ----------------------------------------------------------------------------
-find_package(MLIR REQUIRED)
+find_package(MLIR REQUIRED CONFIG)
+message(STATUS "Found MLIR ${MLIR_PACKAGE_VERSION}")
+message(STATUS "Using MLIRConfig.cmake in ${MLIR_DIR}")
 find_program(MLIRTG NAMES mlir-tblgen-18 mlir-tblgen)
+message(STATUS "Found mlir-tblgen ${MLIRTG}")
 find_package(LLVM REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
-list(APPEND CMAKE_MODULE_PATH ${LLVM_DIR})
+list(APPEND CMAKE_MODULE_PATH "${MLIR_CMAKE_DIR}")
+list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
 
 # ----------------------------------------------------------------------------
 # Declare the OpFlow-JIT target

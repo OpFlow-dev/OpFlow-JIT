@@ -1,8 +1,7 @@
-#ifndef OPLANG_TD
-#define OPLANG_TD
+#ifndef OPPP
+#define OPPP
 
-include "OpDialect.td"
-include "OpOps.td"
-
+include "OpLangDialect.td"
+include "OpLangOps.td"
 
 #endif
