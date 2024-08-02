@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     double alpha = 1.0, dt = 1.0;
     Expr lhs, rhs;
     lhs += u;
-    rhs += FDM::d2x(u);
+    // rhs += FDM::d2x(u);
     rhs *= Scalar(alpha * dt);
     Solve(lhs == rhs, Solver {});
 
