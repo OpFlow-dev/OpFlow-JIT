@@ -7,7 +7,7 @@ def OpLangDialect : Dialect {
     let name = "OpLang";
     let cppNamespace = "::OpFlow::lang";
     let summary = "OpLang Dialect";
-    //let useDefaultTypePrinterParser = true;
+    let useDefaultTypePrinterParser = true;
 }
 
 #endif

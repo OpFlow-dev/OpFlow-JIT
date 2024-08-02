@@ -14,7 +14,14 @@ target_include_directories(OpFlow-JIT PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
-target_link_libraries(OpFlow-JIT PRIVATE spdlog::spdlog)
+target_link_libraries(OpFlow-JIT 
+    PRIVATE spdlog::spdlog
+    OpLang
+    MLIRIR MLIRParser MLIRSupport
+    MLIROptLib        # w.r.t. #include "mlir/Tools/mlir-opt/MlirOptMain.h"
+    MLIRFuncDialect   # w.r.t. #include "mlir/Dialect/Func/IR/FuncOps.h"
+    MLIRTransforms    # w.r.t. #include "mlir/Transforms/Passes.h"
+    )
 
 # ----------------------------------------------------------------------------
 # Language & library features detection
