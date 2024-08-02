@@ -41,7 +41,8 @@ jobs:
         run: |
           export INPUT_MPI=${{ matrix.mpi }}
           if [ "$RUNNER_OS" == "Linux" ]; then
-            sudo apt update && sudo apt install -y libmlir-18-dev clang-18 gcc g++ cmake
+            sudo apt update && sudo apt install -y libmlir-18-dev clang-18 gcc g++ cmake mlir-18-tools
+            sudo apt install pipx libspdlog-dev libbenchmark-dev libgtest-dev libgmock-dev
             if [ "$INPUT_MPI" == "ON" ]; then
                sudo apt install -y libopenmpi-dev libhdf5-mpi-dev
             else
@@ -58,7 +59,7 @@ jobs:
                echo "$RUNNER_OS not supported"
                exit 1
           fi
-          python3 -m pip install sphinx sphinx-rtd-dark-mode breathe
+          pipx install sphinx breathe
       - name: Make directory
         run: mkdir -p build
       - name: Generate
@@ -66,7 +67,8 @@ jobs:
         run: |
           if [ "${{ matrix.compiler }}" == "clang" ]; then
             if [ "$RUNNER_OS" == "Linux" ]; then
-              cmake -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18 ..
+              cmake -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18 \
+              -DMLIR_DIR=/usr/lib/llvm-18/lib/cmake/mlir -DGTest_DIR=/usr/lib/x86_64-linux-gnu/cmake/GTest ..
             else
               cmake -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang \
                     -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ..
